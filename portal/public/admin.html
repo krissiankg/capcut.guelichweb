@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Administration — CapCut Studio</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+
+    :root {
+
+      --bg: #0a0a0a; --surface: #171d17; --border: #30382f;
+
+      --text: #f4f2e8; --muted: #9ca493; --accent: #aa9158; --error: #dc4c4c;
+
+    }
+
+    * { box-sizing: border-box; }
+
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); }
+
+    header {
+
+      display: flex; justify-content: space-between; align-items: center;
+
+      padding: 16px 24px; border-bottom: 1px solid var(--border); background: var(--surface);
+
+    }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+    h1 { margin: 0; font-size: 1.25rem; }
+
+    h2 { margin: 28px 0 12px; font-size: 1rem; color: var(--accent); }
+
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+    .card {
+
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px;
+
+    }
+
+    label { display: block; font-size: 0.75rem; color: var(--muted); margin-bottom: 4px; }
+
+    input, select {
+
+      width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border);
+
+      background: #0f120f; color: var(--text); margin-bottom: 10px;
+
+    }
+
+    button {
+
+      padding: 10px 14px; border: none; border-radius: 10px; background: var(--accent);
+
+      color: #0a0a0a; font-weight: 600; cursor: pointer;
+
+    }
+
+    button.secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
+
+    button.small { padding: 4px 10px; font-size: 0.75rem; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--border); }
+
+    .msg { padding: 10px; border-radius: 8px; margin-bottom: 12px; display: none; }
+
+    .msg.ok { display: block; background: rgba(76,175,122,0.15); color: #9fd4b5; }
+
+    .msg.err { display: block; background: rgba(220,76,76,0.15); color: #f5a5a5; }
+
+    .note { font-size: 0.8rem; color: var(--muted); margin: 0 0 12px; line-height: 1.5; }
+
+    .inactive { opacity: 0.55; }
+
+    .badge-optin {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      background: rgba(76, 175, 122, 0.15);
+      color: #9fd4b5;
+    }
+
+    .badge-optout {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      background: rgba(156, 164, 147, 0.12);
+      color: var(--muted);
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <header>
+
+    <h1>CapCut Studio — Administration</h1>
+
+    <div>
+
+      <a href="/" style="color:var(--accent);margin-right:16px;text-decoration:none;">Éditeur</a>
+
+      <button class="secondary" id="logout">Déconnexion</button>
+
+    </div>
+
+  </header>
+
+  <main>
+
+    <div id="msg" class="msg"></div>
+
+
+
+    <p class="note">
+
+      Mode accès gratuit actif — les utilisateurs s'inscrivent via <a href="/inscription" style="color:var(--accent);">/inscription</a>.
+
+      Vous pouvez créer des comptes manuellement ou désactiver un utilisateur.
+
+    </p>
+
+
+
+    <h2>Créer un utilisateur</h2>
+
+    <div class="card">
+
+      <form id="create-user">
+
+        <div class="grid">
+
+          <div>
+
+            <label>Email</label>
+
+            <input name="email" type="email" required />
+
+          </div>
+
+          <div>
+
+            <label>Nom complet</label>
+
+            <input name="fullName" required />
+
+          </div>
+
+          <div>
+
+            <label>Mot de passe temporaire</label>
+
+            <input name="password" type="text" required />
+
+          </div>
+
+        </div>
+
+        <input type="hidden" name="planSlug" value="free" />
+
+        <button type="submit">Créer l'utilisateur (accès gratuit)</button>
+
+      </form>
+
+    </div>
+
+
+
+    <h2>Utilisateurs</h2>
+
+    <div class="card" style="overflow-x:auto;">
+
+      <table>
+
+        <thead><tr><th>Email</th><th>Nom</th><th>Rôle</th><th>Emails promo</th><th>Statut</th><th>Actions</th></tr></thead>
+
+        <tbody id="users-body"></tbody>
+
+      </table>
+
+    </div>
+
+
+
+    <h2>Accès récents</h2>
+
+    <div class="card" style="overflow-x:auto;">
+
+      <table>
+
+        <thead><tr><th>Utilisateur</th><th>Type</th><th>Statut</th><th>Fin</th></tr></thead>
+
+        <tbody id="subs-body"></tbody>
+
+      </table>
+
+    </div>
+
+  </main>
+
+  <script>
+
+    const msg = document.getElementById("msg");
+
+    function show(text, ok) {
+
+      msg.textContent = text;
+
+      msg.className = "msg " + (ok ? "ok" : "err");
+
+    }
+
+
+
+    async function toggleUser(id, isActive) {
+
+      const res = await fetch(`/api/admin/users/${id}/active`, {
+
+        method: "PATCH",
+
+        headers: { "Content-Type": "application/json" },
+
+        body: JSON.stringify({ isActive: !isActive }),
+
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) { show(data.error || "Erreur", false); return; }
+
+      show(isActive ? "Utilisateur désactivé." : "Utilisateur réactivé.", true);
+
+      load();
+
+    }
+
+
+
+    async function load() {
+
+      const res = await fetch("/api/admin/overview");
+
+      if (!res.ok) { location.href = "/connexion?next=/admin"; return; }
+
+      const data = await res.json();
+
+
+
+      document.getElementById("users-body").innerHTML = data.users.map((u) =>
+
+        `<tr class="${u.is_active ? "" : "inactive"}">
+
+          <td>${u.email}</td>
+
+          <td>${u.full_name}</td>
+
+          <td>${u.role}</td>
+
+          <td>${u.marketing_opt_in
+            ? `<span class="badge-optin" title="${u.marketing_opt_in_at ? new Date(u.marketing_opt_in_at).toLocaleString("fr-FR") : ""}">opt-in</span>`
+            : `<span class="badge-optout">—</span>`}</td>
+
+          <td>${u.is_active ? "actif" : "désactivé"}</td>
+
+          <td>
+
+            ${u.role !== "admin" ? `<button type="button" class="secondary small" data-id="${u.id}" data-active="${u.is_active}">
+
+              ${u.is_active ? "Désactiver" : "Réactiver"}
+
+            </button>` : "—"}
+
+          </td>
+
+        </tr>`
+
+      ).join("");
+
+
+
+      document.querySelectorAll("[data-id]").forEach((btn) => {
+
+        btn.addEventListener("click", () => {
+
+          toggleUser(btn.dataset.id, btn.dataset.active === "true");
+
+        });
+
+      });
+
+
+
+      document.getElementById("subs-body").innerHTML = data.subscriptions.map((s) =>
+
+        `<tr><td>${s.user?.email || s.user_id}</td><td>${s.plan?.name_fr || "—"}</td><td>${s.status}</td><td>${new Date(s.ends_at).toLocaleDateString("fr-FR")}</td></tr>`
+
+      ).join("");
+
+    }
+
+
+
+    document.getElementById("create-user").addEventListener("submit", async (e) => {
+
+      e.preventDefault();
+
+      const fd = new FormData(e.target);
+
+      const body = Object.fromEntries(fd.entries());
+
+      const res = await fetch("/api/admin/users", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+
+      const data = await res.json();
+
+      if (!res.ok) { show(data.error || "Erreur", false); return; }
+
+      show(`Utilisateur créé : ${data.user.email}`, true);
+
+      e.target.reset();
+
+      load();
+
+    });
+
+
+
+    document.getElementById("logout").addEventListener("click", async () => {
+
+      await fetch("/api/auth/logout", { method: "POST" });
+
+      location.href = "/connexion";
+
+    });
+
+
+
+    load();
+
+  </script>
+
+</body>
+
+</html>
+

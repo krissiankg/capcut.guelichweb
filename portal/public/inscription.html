@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inscription gratuite — CapCut Studio · Guelich Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #171d17;
+      --border: #30382f;
+      --text: #f4f2e8;
+      --muted: #9ca493;
+      --accent: #aa9158;
+      --accent-hover: #c4a96a;
+      --error: #dc4c4c;
+      --success: #4caf7a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(170, 145, 88, 0.18), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(48, 56, 47, 0.55), transparent);
+      pointer-events: none;
+    }
+    .layout {
+      position: relative;
+      width: 100%;
+      max-width: 960px;
+      display: grid;
+      gap: 32px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 860px) {
+      .layout { grid-template-columns: 1.05fr 0.95fr; align-items: center; }
+    }
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .hero p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+    .features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .features li::before { content: "✦ "; color: var(--accent); }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #0f120f;
+      color: var(--text);
+      font: inherit;
+      margin-bottom: 16px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input:focus { border-color: var(--accent); }
+    button {
+      width: 100%;
+      padding: 13px 16px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), #8a7344);
+      color: #0a0a0a;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: filter 0.15s, transform 0.1s;
+    }
+    button:hover { filter: brightness(1.08); }
+    button:active { transform: scale(0.99); }
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      filter: grayscale(0.15);
+    }
+    button:disabled.is-loading {
+      opacity: 0.6;
+      cursor: wait;
+      filter: none;
+    }
+    button:disabled:not(.is-loading):hover { filter: grayscale(0.15); }
+    .error {
+      display: none;
+      margin-bottom: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(220, 76, 76, 0.4);
+      background: rgba(220, 76, 76, 0.1);
+      color: #f5a5a5;
+      font-size: 0.85rem;
+    }
+    .error.visible { display: block; }
+    .success {
+      display: none;
+      margin-bottom: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(76, 175, 122, 0.4);
+      background: rgba(76, 175, 122, 0.1);
+      color: #9fd4b5;
+      font-size: 0.85rem;
+    }
+    .success.visible { display: block; }
+    .footer-links {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .footer-links a { color: var(--accent); text-decoration: none; }
+    .footer-links a:hover { text-decoration: underline; }
+    .hint { font-size: 0.75rem; color: var(--muted); margin: -10px 0 14px; }
+    .opt-in {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 4px 0 18px;
+      cursor: pointer;
+    }
+    .opt-in input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      margin: 2px 0 0;
+      flex-shrink: 0;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .opt-in span {
+      font-size: 0.75rem;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+    .opt-in a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+    .opt-in a:hover { color: var(--accent); }
+    .opt-in-error {
+      display: none;
+      margin: -8px 0 14px;
+      font-size: 0.75rem;
+      color: #f5a5a5;
+    }
+    .opt-in-error.visible { display: block; }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <div class="hero">
+      <span class="badge">CapCut Studio · GUELICHWEB</span>
+      <h1>Inscription gratuite</h1>
+      <p>
+        Créez votre compte en quelques secondes et accédez immédiatement à l'éditeur vidéo professionnel.
+        Aucun paiement requis pour l'instant.
+      </p>
+      <ul class="features">
+        <li>Accès gratuit à l'éditeur CapCut Studio</li>
+        <li>Montage multi-pistes, effets et export</li>
+        <li>Vos vidéos restent sur votre appareil</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2 style="margin:0 0 6px;font-size:1.25rem;">Créer un compte</h2>
+      <p style="margin:0 0 22px;font-size:0.88rem;color:var(--muted);">Remplissez le formulaire pour commencer.</p>
+
+      <div id="error" class="error" role="alert"></div>
+      <div id="success" class="success" role="status"></div>
+
+      <form id="register-form">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required placeholder="vous@email.com" />
+
+        <label for="fullName">Nom complet <span style="color:var(--muted);font-weight:400;">(optionnel)</span></label>
+        <input id="fullName" name="fullName" type="text" autocomplete="name" placeholder="Votre nom" />
+
+        <label for="password">Mot de passe</label>
+        <input id="password" name="password" type="password" autocomplete="new-password" required placeholder="••••••••" minlength="8" />
+        <p class="hint">Minimum 8 caractères</p>
+
+        <label for="confirmPassword">Confirmer le mot de passe</label>
+        <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" required placeholder="••••••••" />
+
+        <label class="opt-in" for="marketingOptIn">
+          <input id="marketingOptIn" name="marketingOptIn" type="checkbox" value="1" required />
+          <span>
+            J'accepte de recevoir des actualités et offres par e-mail. Désinscription possible à tout moment.
+            <a href="/confidentialite">Confidentialité</a>
+          </span>
+        </label>
+        <p id="opt-in-error" class="opt-in-error" role="alert"></p>
+
+        <button type="submit" id="submit-btn" disabled>S'inscrire gratuitement</button>
+      </form>
+
+      <p class="footer-links">
+        Déjà un compte ? <a href="/connexion">Se connecter</a>
+      </p>
+      <p class="footer-links" style="margin-top:10px;font-size:0.8rem;">
+        <a href="/cgu">CGU</a> · <a href="/confidentialite">Confidentialité</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const errorEl = document.getElementById("error");
+    const successEl = document.getElementById("success");
+    const form = document.getElementById("register-form");
+    const submitBtn = document.getElementById("submit-btn");
+    const marketingOptIn = document.getElementById("marketingOptIn");
+    const optInError = document.getElementById("opt-in-error");
+
+    function updateSubmitState() {
+      if (!submitBtn.classList.contains("is-loading")) {
+        submitBtn.disabled = !marketingOptIn.checked;
+      }
+      if (marketingOptIn.checked) {
+        optInError.classList.remove("visible");
+        optInError.textContent = "";
+      }
+    }
+
+    marketingOptIn.addEventListener("change", updateSubmitState);
+    updateSubmitState();
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      errorEl.classList.remove("visible");
+      successEl.classList.remove("visible");
+
+      if (!marketingOptIn.checked) {
+        optInError.textContent = "Veuillez accepter de recevoir nos actualités pour continuer.";
+        optInError.classList.add("visible");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.classList.add("is-loading");
+      submitBtn.textContent = "Inscription…";
+
+      try {
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: document.getElementById("email").value,
+            fullName: document.getElementById("fullName").value,
+            password: document.getElementById("password").value,
+            confirmPassword: document.getElementById("confirmPassword").value,
+            marketingOptIn: document.getElementById("marketingOptIn").checked,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          errorEl.textContent = data.error || "Inscription impossible.";
+          errorEl.classList.add("visible");
+          return;
+        }
+        location.href = data.redirectTo || "/";
+      } catch {
+        errorEl.textContent = "Erreur réseau. Réessayez.";
+        errorEl.classList.add("visible");
+      } finally {
+        submitBtn.classList.remove("is-loading");
+        submitBtn.textContent = "S'inscrire gratuitement";
+        updateSubmitState();
+      }
+    });
+
+    fetch("/api/auth/session").then((r) => r.json()).then((data) => {
+      if (data.authenticated && data.hasAccess) {
+        location.href = "/";
+      }
+    }).catch(() => {});
+  </script>
+</body>
+</html>

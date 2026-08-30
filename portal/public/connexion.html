@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connexion — CapCut Studio · Guelich Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #171d17;
+      --border: #30382f;
+      --text: #f4f2e8;
+      --muted: #9ca493;
+      --accent: #aa9158;
+      --accent-hover: #c4a96a;
+      --error: #dc4c4c;
+      --success: #4caf7a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(170, 145, 88, 0.18), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(48, 56, 47, 0.55), transparent);
+      pointer-events: none;
+    }
+    .layout {
+      position: relative;
+      width: 100%;
+      max-width: 960px;
+      display: grid;
+      gap: 32px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 860px) {
+      .layout { grid-template-columns: 1.05fr 0.95fr; align-items: center; }
+    }
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .hero p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+    .features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .features li::before { content: "✦ "; color: var(--accent); }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #0f120f;
+      color: var(--text);
+      font: inherit;
+      margin-bottom: 16px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input:focus { border-color: var(--accent); }
+    button {
+      width: 100%;
+      padding: 13px 16px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), #8a7344);
+      color: #0a0a0a;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: filter 0.15s, transform 0.1s;
+    }
+    button:hover { filter: brightness(1.08); }
+    button:active { transform: scale(0.99); }
+    button:disabled { opacity: 0.6; cursor: wait; }
+    .error {
+      display: none;
+      margin-bottom: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(220, 76, 76, 0.4);
+      background: rgba(220, 76, 76, 0.1);
+      color: #f5a5a5;
+      font-size: 0.85rem;
+    }
+    .error.visible { display: block; }
+    .success {
+      display: none;
+      margin-bottom: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(76, 175, 122, 0.4);
+      background: rgba(76, 175, 122, 0.1);
+      color: #9fd4b5;
+      font-size: 0.85rem;
+    }
+    .success.visible { display: block; }
+    .footer-links {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .footer-links a { color: var(--accent); text-decoration: none; }
+    .footer-links a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <div class="hero">
+      <span class="badge">CapCut Studio · GUELICHWEB</span>
+      <h1>Montage vidéo professionnel dans votre navigateur</h1>
+      <p>
+        Accédez à l'éditeur CapCut Studio — timeline multi-pistes, effets, export 4K.
+        Vos vidéos restent sur votre appareil. Inscription gratuite.
+      </p>
+      <ul class="features">
+        <li>Montage multi-pistes et export MP4/WebM</li>
+        <li>Effets, transitions, sous-titres et color grading</li>
+        <li>100 % navigateur — confidentialité maximale</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2 style="margin:0 0 6px;font-size:1.25rem;">Connexion</h2>
+      <p style="margin:0 0 22px;font-size:0.88rem;color:var(--muted);">Entrez vos identifiants pour accéder à l'éditeur.</p>
+
+      <div id="error" class="error" role="alert"></div>
+      <div id="success" class="success" role="status"></div>
+
+      <form id="login-form">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required placeholder="vous@email.com" />
+
+        <label for="password">Mot de passe</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" />
+        <p style="margin:-8px 0 16px;text-align:right;font-size:0.82rem;">
+          <a href="/mot-de-passe-oublie" style="color:var(--accent);text-decoration:none;">Mot de passe oublié ?</a>
+        </p>
+
+        <button type="submit" id="submit-btn">Se connecter</button>
+      </form>
+
+      <p class="footer-links">
+        Pas encore de compte ? <a href="/inscription">Inscription gratuite</a>
+      </p>
+      <p class="footer-links" style="margin-top:10px;font-size:0.8rem;">
+        <a href="/cgu">CGU</a> · <a href="/confidentialite">Confidentialité</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const next = params.get("next") || "/";
+    const errorEl = document.getElementById("error");
+    const successEl = document.getElementById("success");
+    const form = document.getElementById("login-form");
+    const submitBtn = document.getElementById("submit-btn");
+
+    if (params.get("error") === "session") {
+      errorEl.textContent = "Session expirée. Reconnectez-vous.";
+      errorEl.classList.add("visible");
+    }
+
+    if (params.get("registered") === "1") {
+      successEl.textContent = "Inscription réussie ! Connectez-vous avec vos identifiants.";
+      successEl.classList.add("visible");
+    }
+
+    if (params.get("reset") === "1") {
+      successEl.textContent = "Mot de passe mis à jour. Connectez-vous avec votre nouveau mot de passe.";
+      successEl.classList.add("visible");
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      errorEl.classList.remove("visible");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Connexion…";
+
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          errorEl.textContent = data.error || "Connexion impossible.";
+          errorEl.classList.add("visible");
+          return;
+        }
+        location.href = data.redirectTo || next;
+      } catch {
+        errorEl.textContent = "Erreur réseau. Réessayez.";
+        errorEl.classList.add("visible");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Se connecter";
+      }
+    });
+
+    fetch("/api/auth/session").then((r) => r.json()).then((data) => {
+      if (data.authenticated && data.hasAccess) {
+        location.href = next.startsWith("/") ? next : "/";
+      }
+    }).catch(() => {});
+  </script>
+</body>
+</html>

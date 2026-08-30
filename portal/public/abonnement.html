@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accès gratuit — CapCut Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a; --surface: #171d17; --border: #30382f;
+      --text: #f4f2e8; --muted: #9ca493; --accent: #aa9158;
+    }
+    body {
+      margin: 0; min-height: 100vh; font-family: Inter, system-ui, sans-serif;
+      background: var(--bg); color: var(--text); padding: 40px 20px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .wrap { max-width: 520px; margin: 0 auto; text-align: center; }
+    h1 { margin: 0 0 8px; font-size: 1.75rem; }
+    p.lead { color: var(--muted); margin: 0 0 32px; line-height: 1.6; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+      padding: 32px 28px; text-align: left;
+    }
+    .card h2 { margin: 0 0 8px; font-size: 1.1rem; color: var(--accent); }
+    .badge {
+      display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    }
+    .card p { color: var(--muted); font-size: 0.9rem; line-height: 1.55; margin: 0 0 20px; }
+    ul { margin: 0 0 24px; padding: 0; list-style: none; color: var(--muted); font-size: 0.9rem; }
+    ul li::before { content: "✦ "; color: var(--accent); }
+    ul li { margin-bottom: 8px; }
+    a.btn {
+      display: block; text-align: center; padding: 13px 16px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), #8a7344); color: #0a0a0a;
+      text-decoration: none; font-weight: 600;
+    }
+    a.btn.secondary {
+      background: transparent; border: 1px solid var(--border); color: var(--text);
+      margin-top: 12px;
+    }
+    .back { color: var(--accent); text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 24px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a href="/connexion" class="back">← Retour connexion</a>
+    <span class="badge">CapCut Studio</span>
+    <h1>Accès gratuit</h1>
+    <p class="lead">
+      CapCut Studio est actuellement disponible gratuitement.
+      Créez votre compte et commencez à monter vos vidéos immédiatement.
+    </p>
+    <article class="card">
+      <h2>Inscription gratuite</h2>
+      <p>
+        Aucun paiement requis. Les forfaits payants seront proposés ultérieurement.
+      </p>
+      <ul>
+        <li>Éditeur vidéo professionnel dans le navigateur</li>
+        <li>Timeline multi-pistes, effets et export</li>
+        <li>Confidentialité — vos médias restent locaux</li>
+      </ul>
+      <a class="btn" href="/inscription">Créer un compte gratuit</a>
+      <a class="btn secondary" href="/connexion">J'ai déjà un compte</a>
+    </article>
+  </div>
+</body>
+</html>
