@@ -60,7 +60,7 @@ if [[ ! -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ]]; then
     --non-interactive --agree-tos -m admin@guelichweb.store || true
 fi
 
-sudo nginx -t && sudo systemctl reload nginx
+sudo nginx -t && (sudo /www/server/nginx/sbin/nginx -s reload 2>/dev/null || sudo /etc/init.d/nginx reload)
 
 echo "==> Seed admin (si ADMIN_PASSWORD défini dans .env) :"
 echo "    cd ${PORTAL_ROOT} && npm run seed-admin"
