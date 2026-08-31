@@ -1,4 +1,72 @@
-/* Shared GUELICHWEB branding — CapCut Studio portal */
+/* CapCut Studio — GUELICHWEB portal theme
+   Inspired by EffyTech / FORGE IA: green-tinted anthracite, gold accents */
+
+:root {
+  /* Base — green-tinted anthracite, NOT pure black */
+  --bg: #171d17;
+  --bg-deep: #141a14;
+  --bg-mid: #1a2119;
+  --surface: #1e261e;
+  --surface-raised: #242d24;
+  --surface-input: #121812;
+  --border: #30382f;
+  --border-subtle: rgba(215, 210, 197, 0.1);
+
+  /* Text — cream / off-white, not harsh white */
+  --text: #fbfaf4;
+  --text-secondary: #e8e6df;
+  --muted: #9ca493;
+
+  /* Gold accents */
+  --accent: #aa9158;
+  --accent-hover: #c9a962;
+  --accent-dark: #8a7344;
+  --accent-darkest: #6e5d36;
+  --accent-glow: rgba(170, 145, 88, 0.22);
+  --on-accent: #171d17;
+
+  /* Status */
+  --error: #dc4c4c;
+  --success: #4caf7a;
+
+  /* Layout */
+  --radius: 16px;
+  --radius-sm: 12px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Ambient background (auth, legal, account pages) ── */
+body:not(.landing) {
+  background: var(--bg);
+  color: var(--text);
+}
+
+body:not(.landing)::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -12%, rgba(170, 145, 88, 0.16), transparent 55%),
+    radial-gradient(ellipse 65% 45% at 100% 85%, rgba(48, 56, 47, 0.42), transparent 50%),
+    radial-gradient(ellipse 50% 38% at 0% 55%, rgba(170, 145, 88, 0.07), transparent 50%),
+    linear-gradient(165deg, #1c241c 0%, var(--bg) 42%, var(--bg-deep) 100%);
+}
+
+body:not(.landing)::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
+/* ── Shared GUELICHWEB branding ── */
 .brand-nowrap {
   white-space: nowrap;
 }
@@ -12,8 +80,9 @@
   justify-content: center;
   align-items: center;
   padding: 8px 16px;
-  background: #0a0a0a;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--bg-deep) 88%, transparent);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border-subtle);
   z-index: 10;
 }
 
@@ -27,7 +96,7 @@
 
 .brand-footer-label {
   font-size: 0.65rem;
-  color: #6b7368;
+  color: var(--muted);
   letter-spacing: 0.04em;
   text-transform: none;
 }
@@ -52,13 +121,11 @@
   object-fit: contain;
 }
 
-/* Medium vertical logo — landing / hero accents only */
 .brand-logo--medium img {
   max-width: 100px;
   max-height: 72px;
 }
 
-/* Large stacked logo — hero sections */
 .brand-logo--stacked img {
   max-width: 160px;
   max-height: 120px;
@@ -71,7 +138,7 @@
 .guelichweb-footer .brand-name {
   white-space: nowrap;
   font-weight: 600;
-  color: #9ca493;
+  color: var(--muted);
 }
 
 body.has-brand-footer {

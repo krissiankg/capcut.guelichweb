@@ -1,18 +1,6 @@
 /* CapCut Studio — Landing page animations & layout */
 
 :root {
-  --bg: #0a0a0a;
-  --surface: #171d17;
-  --surface-raised: #1e261e;
-  --border: #30382f;
-  --text: #f4f2e8;
-  --muted: #9ca493;
-  --accent: #aa9158;
-  --accent-hover: #c4a96a;
-  --accent-glow: rgba(170, 145, 88, 0.25);
-  --radius: 16px;
-  --radius-sm: 12px;
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --section-gap: clamp(72px, 10vw, 120px);
 }
 
@@ -44,43 +32,54 @@ body.landing {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 50% at 50% -15%, rgba(170, 145, 88, 0.22), transparent 60%),
-    radial-gradient(ellipse 55% 40% at 100% 80%, rgba(48, 56, 47, 0.5), transparent),
-    radial-gradient(ellipse 40% 35% at 0% 60%, rgba(170, 145, 88, 0.08), transparent);
+    radial-gradient(ellipse 90% 55% at 50% -12%, rgba(170, 145, 88, 0.18), transparent 58%),
+    radial-gradient(ellipse 65% 45% at 100% 82%, rgba(48, 56, 47, 0.38), transparent 52%),
+    radial-gradient(ellipse 50% 38% at 0% 58%, rgba(170, 145, 88, 0.09), transparent 50%),
+    linear-gradient(168deg, #1c241c 0%, var(--bg) 40%, var(--bg-deep) 100%);
+}
+
+.landing-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
 }
 
 .landing-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.45;
-  animation: orb-float 18s var(--ease-out) infinite alternate;
+  filter: blur(90px);
+  opacity: 0.5;
+  animation: orb-float 20s var(--ease-out) infinite alternate;
 }
 
 .landing-orb--1 {
-  width: 420px;
-  height: 420px;
-  top: -8%;
-  left: 55%;
-  background: rgba(170, 145, 88, 0.18);
+  width: 480px;
+  height: 480px;
+  top: -10%;
+  left: 52%;
+  background: radial-gradient(circle, rgba(201, 169, 98, 0.22) 0%, rgba(170, 145, 88, 0.08) 55%, transparent 70%);
   animation-delay: 0s;
 }
 
 .landing-orb--2 {
-  width: 300px;
-  height: 300px;
-  bottom: 10%;
-  left: -5%;
-  background: rgba(48, 56, 47, 0.35);
+  width: 340px;
+  height: 340px;
+  bottom: 8%;
+  left: -6%;
+  background: radial-gradient(circle, rgba(48, 56, 47, 0.4) 0%, rgba(30, 38, 30, 0.15) 60%, transparent 75%);
   animation-delay: -6s;
 }
 
 .landing-orb--3 {
-  width: 200px;
-  height: 200px;
-  top: 45%;
-  right: 8%;
-  background: rgba(170, 145, 88, 0.12);
+  width: 240px;
+  height: 240px;
+  top: 42%;
+  right: 6%;
+  background: radial-gradient(circle, rgba(170, 145, 88, 0.16) 0%, rgba(170, 145, 88, 0.04) 60%, transparent 75%);
   animation-delay: -12s;
 }
 
@@ -191,9 +190,9 @@ body.landing {
 .btn:active { transform: scale(0.97); }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent), #8a7344);
-  color: #0a0a0a;
-  box-shadow: 0 4px 24px rgba(170, 145, 88, 0.2);
+  background: linear-gradient(135deg, var(--accent-hover), var(--accent-dark));
+  color: var(--on-accent);
+  box-shadow: 0 4px 24px var(--accent-glow);
 }
 
 .btn-primary:hover {
@@ -345,7 +344,7 @@ body.landing {
 .feature-card:hover {
   transform: translateY(-6px);
   border-color: rgba(170, 145, 88, 0.4);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(170, 145, 88, 0.08);
+  box-shadow: 0 16px 48px rgba(20, 26, 20, 0.45), 0 0 0 1px rgba(170, 145, 88, 0.1);
 }
 
 .feature-icon {
@@ -542,8 +541,8 @@ body.landing {
 .cta-banner {
   text-align: center;
   padding: 56px 40px;
-  background: linear-gradient(145deg, rgba(170, 145, 88, 0.12), rgba(23, 29, 23, 0.9));
-  border: 1px solid rgba(170, 145, 88, 0.25);
+  background: linear-gradient(145deg, rgba(170, 145, 88, 0.14), rgba(30, 38, 30, 0.85));
+  border: 1px solid rgba(170, 145, 88, 0.28);
   border-radius: calc(var(--radius) + 4px);
   position: relative;
   overflow: hidden;

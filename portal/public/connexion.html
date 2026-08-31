@@ -9,37 +9,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/portal-brand.css" />
   <style>
-    :root {
-      --bg: #0a0a0a;
-      --surface: #171d17;
-      --border: #30382f;
-      --text: #f4f2e8;
-      --muted: #9ca493;
-      --accent: #aa9158;
-      --accent-hover: #c4a96a;
-      --error: #dc4c4c;
-      --success: #4caf7a;
-    }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100vh;
       font-family: Inter, system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(170, 145, 88, 0.18), transparent),
-        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(48, 56, 47, 0.55), transparent);
-      pointer-events: none;
     }
     .layout {
       position: relative;
@@ -103,7 +81,7 @@
       padding: 12px 14px;
       border-radius: 12px;
       border: 1px solid var(--border);
-      background: #0f120f;
+      background: var(--surface-input);
       color: var(--text);
       font: inherit;
       margin-bottom: 16px;
@@ -117,7 +95,7 @@
       border: none;
       border-radius: 12px;
       background: linear-gradient(135deg, var(--accent), #8a7344);
-      color: #0a0a0a;
+      color: var(--on-accent);
       font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;

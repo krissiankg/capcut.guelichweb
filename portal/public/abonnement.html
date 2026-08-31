@@ -7,13 +7,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/portal-brand.css" />
   <style>
-    :root {
-      --bg: #0a0a0a; --surface: #171d17; --border: #30382f;
-      --text: #f4f2e8; --muted: #9ca493; --accent: #aa9158;
-    }
     body {
       margin: 0; min-height: 100vh; font-family: Inter, system-ui, sans-serif;
-      background: var(--bg); color: var(--text); padding: 40px 20px;
+      padding: 40px 20px;
       display: flex; align-items: center; justify-content: center;
     }
     .wrap { max-width: 520px; margin: 0 auto; text-align: center; }
@@ -34,7 +30,7 @@
     ul li { margin-bottom: 8px; }
     a.btn {
       display: block; text-align: center; padding: 13px 16px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), #8a7344); color: #0a0a0a;
+      background: linear-gradient(135deg, var(--accent-hover), var(--accent-dark)); color: var(--on-accent);
       text-decoration: none; font-weight: 600;
     }
     a.btn.secondary {

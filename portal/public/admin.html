@@ -15,17 +15,9 @@
 
   <style>
 
-    :root {
-
-      --bg: #0a0a0a; --surface: #171d17; --border: #30382f;
-
-      --text: #f4f2e8; --muted: #9ca493; --accent: #aa9158; --error: #dc4c4c;
-
-    }
-
     * { box-sizing: border-box; }
 
-    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); }
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; }
 
     header {
 
@@ -55,7 +47,7 @@
 
       width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border);
 
-      background: #0f120f; color: var(--text); margin-bottom: 10px;
+      background: var(--surface-input); color: var(--text); margin-bottom: 10px;
 
     }
 
@@ -63,7 +55,7 @@
 
       padding: 10px 14px; border: none; border-radius: 10px; background: var(--accent);
 
-      color: #0a0a0a; font-weight: 600; cursor: pointer;
+      color: var(--on-accent); font-weight: 600; cursor: pointer;
 
     }
 
