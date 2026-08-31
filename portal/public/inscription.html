@@ -196,9 +196,30 @@
       color: #f5a5a5;
     }
     .opt-in-error.visible { display: block; }
+    .page-top {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 18px 24px;
+      z-index: 10;
+    }
+    .back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.15s;
+    }
+    .back-home:hover { color: var(--accent); }
   </style>
 </head>
 <body class="has-brand-footer">
+  <nav class="page-top" aria-label="Navigation">
+    <a href="/" class="back-home">← Retour à l'accueil</a>
+  </nav>
   <div class="layout">
     <div class="hero">
       <span class="badge">CapCut Studio · <span class="brand-nowrap">GUELICHWEB</span></span>
