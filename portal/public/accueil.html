@@ -3,236 +3,334 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CapCut Studio — Éditeur vidéo professionnel dans le navigateur</title>
-  <meta name="description" content="CapCut Studio — montage vidéo multi-pistes, effets, export 4K. Gratuit pour l'instant. Éditeur professionnel dans votre navigateur." />
+  <title>CapCut Studio — Éditeur vidéo en ligne gratuit | GUELICHWEB</title>
+  <meta name="description" content="CapCut Studio : éditeur vidéo en ligne gratuit, montage multi-pistes dans le navigateur, export HD. Alternative CapCut sans installation — GUELICHWEB, Bénin &amp; Afrique." />
+  <meta name="keywords" content="éditeur vidéo en ligne, montage vidéo gratuit, CapCut alternative, créer vidéos navigateur, éditeur vidéo Bénin, montage vidéo Afrique, GUELICHWEB, CapCut Studio, export HD, sans installation" />
+  <meta name="author" content="GUELICHWEB" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://capcut.guelichweb.store/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://capcut.guelichweb.store/" />
+  <meta property="og:title" content="CapCut Studio — Éditeur vidéo en ligne gratuit | GUELICHWEB" />
+  <meta property="og:description" content="Montez vos vidéos directement dans le navigateur. Timeline multi-pistes, effets, export HD — gratuit, sans installation. Propulsé par GUELICHWEB." />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:site_name" content="CapCut Studio" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CapCut Studio — Éditeur vidéo en ligne gratuit" />
+  <meta name="twitter:description" content="Montage vidéo professionnel dans le navigateur. Gratuit, export HD, sans installation — alternative CapCut par GUELICHWEB." />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/portal-brand.css" />
-  <style>
-    :root {
-      --bg: #0a0a0a;
-      --surface: #171d17;
-      --border: #30382f;
-      --text: #f4f2e8;
-      --muted: #9ca493;
-      --accent: #aa9158;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: Inter, system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(170, 145, 88, 0.2), transparent),
-        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(48, 56, 47, 0.55), transparent);
-      pointer-events: none;
-    }
-    .page {
-      position: relative;
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 48px 24px 80px;
-    }
-    .top-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 64px;
-    }
-    .badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-    .nav-links {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-    .nav-links a {
-      font-size: 0.875rem;
-      color: var(--muted);
-      text-decoration: none;
-      padding: 8px 14px;
-      border-radius: 10px;
-      transition: color 0.15s, background 0.15s;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a.btn-primary {
-      background: linear-gradient(135deg, var(--accent), #8a7344);
-      color: #0a0a0a;
-      font-weight: 600;
-    }
-    .nav-links a.btn-primary:hover { filter: brightness(1.08); }
-    .hero {
-      text-align: center;
-      margin-bottom: 72px;
-    }
-    .hero h1 {
-      margin: 0 0 20px;
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .hero .lead {
-      margin: 0 auto 36px;
-      max-width: 560px;
-      color: var(--muted);
-      font-size: 1.05rem;
-    }
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      justify-content: center;
-    }
-    .cta-row a {
-      display: inline-block;
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      transition: filter 0.15s, transform 0.1s;
-    }
-    .cta-row a:active { transform: scale(0.99); }
-    .cta-row a.primary {
-      background: linear-gradient(135deg, var(--accent), #8a7344);
-      color: #0a0a0a;
-    }
-    .cta-row a.primary:hover { filter: brightness(1.08); }
-    .cta-row a.secondary {
-      border: 1px solid var(--border);
-      color: var(--text);
-      background: var(--surface);
-    }
-    .cta-row a.secondary:hover { border-color: var(--accent); }
-    .features {
-      display: grid;
-      gap: 20px;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      margin-bottom: 64px;
-    }
-    .feature-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px 24px;
-    }
-    .feature-card h2 {
-      margin: 0 0 10px;
-      font-size: 1.05rem;
-      color: var(--accent);
-    }
-    .feature-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.55;
-    }
-    .pricing-note {
-      text-align: center;
-      padding: 28px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      margin-bottom: 48px;
-    }
-    .pricing-note p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-    .pricing-note strong { color: var(--accent); }
-    .site-footer {
-      text-align: center;
-      padding-top: 32px;
-      border-top: 1px solid var(--border);
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-    .site-footer a { color: var(--accent); text-decoration: none; }
-    .site-footer a:hover { text-decoration: underline; }
-    .site-footer p { margin: 8px 0 0; }
-  </style>
+  <link rel="stylesheet" href="/css/landing.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CapCut Studio",
+    "url": "https://capcut.guelichweb.store/",
+    "description": "Éditeur vidéo en ligne gratuit pour créer et monter des vidéos directement dans le navigateur. Timeline multi-pistes, effets, transitions et export HD.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Web",
+    "browserRequirements": "Requires JavaScript. Compatible Chrome, Firefox, Edge, Safari.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "XOF",
+      "description": "Accès gratuit à l'éditeur vidéo en ligne"
+    },
+    "provider": {
+      "@type": "Organization",
+      "name": "GUELICHWEB",
+      "url": "https://guelichweb.store"
+    },
+    "inLanguage": "fr",
+    "featureList": [
+      "Montage vidéo multi-pistes dans le navigateur",
+      "Export HD MP4 et WebM",
+      "Effets, transitions et sous-titres",
+      "Sans installation ni téléchargement",
+      "Traitement local — confidentialité maximale"
+    ]
+  }
+  </script>
 </head>
-<body class="has-brand-footer">
-  <div class="page">
-    <nav class="top-nav" aria-label="Navigation principale">
+<body class="landing has-brand-footer">
+
+  <div class="landing-bg" aria-hidden="true">
+    <div class="landing-orb landing-orb--1"></div>
+    <div class="landing-orb landing-orb--2"></div>
+    <div class="landing-orb landing-orb--3"></div>
+  </div>
+
+  <main class="landing-wrap">
+
+    <nav class="landing-nav" aria-label="Navigation principale">
       <span class="badge">CapCut Studio · <span class="brand-nowrap">GUELICHWEB</span></span>
       <div class="nav-links">
+        <a href="#fonctionnalites">Fonctionnalités</a>
+        <a href="#faq">FAQ</a>
         <a href="/connexion">Se connecter</a>
-        <a href="/inscription" class="btn-primary">S'inscrire</a>
+        <a href="/inscription" class="btn btn-primary" style="padding:8px 18px;font-size:0.875rem;">S'inscrire</a>
       </div>
     </nav>
 
-    <header class="hero">
-      <h1>CapCut Studio — éditeur vidéo professionnel dans le navigateur</h1>
-      <p class="lead">
-        Montez, exportez et partagez vos vidéos sans installation.
-        Timeline multi-pistes, effets, transitions et export haute qualité — le tout dans votre navigateur.
+    <!-- Hero -->
+    <header class="hero hero-animate" id="accueil">
+      <span class="hero-badge">Éditeur vidéo en ligne · 100 % navigateur</span>
+      <h1>Créez des vidéos <span class="highlight">professionnelles</span> sans installer de logiciel</h1>
+      <p class="hero-lead">
+        CapCut Studio est votre éditeur vidéo en ligne gratuit pour monter, exporter et partager des contenus directement depuis votre navigateur.
+        Timeline multi-pistes, effets, transitions et export HD — une alternative CapCut pensée pour les créateurs au Bénin et en Afrique.
       </p>
-      <div class="cta-row">
-        <a href="/inscription" class="primary">Commencer gratuitement</a>
-        <a href="/connexion" class="secondary">Se connecter</a>
+      <div class="hero-cta">
+        <a href="/inscription" class="btn btn-primary btn-lg">S'inscrire gratuitement</a>
+        <a href="/connexion" class="btn btn-secondary btn-lg">Se connecter</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <strong>HD</strong>
+          <span>Export haute qualité</span>
+        </div>
+        <div class="hero-stat">
+          <strong>0 FCFA</strong>
+          <span>Gratuit pour l'instant</span>
+        </div>
+        <div class="hero-stat">
+          <strong>100 %</strong>
+          <span>Dans le navigateur</span>
+        </div>
       </div>
     </header>
 
-    <section class="features" aria-label="Fonctionnalités">
-      <article class="feature-card">
-        <h2>Montage professionnel</h2>
-        <p>Timeline multi-pistes, découpage précis, transitions fluides et outils de montage avancés pour des vidéos soignées.</p>
-      </article>
-      <article class="feature-card">
-        <h2>Export haute qualité</h2>
-        <p>Exportez vos projets en MP4 ou WebM. Effets, sous-titres, color grading — tout ce qu'il faut pour un rendu pro.</p>
-      </article>
-      <article class="feature-card">
-        <h2>100 % navigateur</h2>
-        <p>Vos médias restent sur votre appareil. Pas d'upload serveur — confidentialité maximale et performances locales.</p>
+    <!-- Features -->
+    <section class="landing-section" id="fonctionnalites" aria-labelledby="features-title">
+      <div class="reveal">
+        <span class="section-label">Fonctionnalités</span>
+        <h2 class="section-title" id="features-title">Tout ce qu'il faut pour un montage vidéo professionnel</h2>
+        <p class="section-lead">
+          CapCut Studio réunit les outils essentiels d'un studio de montage dans une interface moderne, accessible depuis n'importe quel ordinateur connecté à Internet.
+        </p>
+      </div>
+      <div class="features-grid">
+        <article class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon" aria-hidden="true">🎬</div>
+          <h3>Montage dans le navigateur</h3>
+          <p>Éditez vos vidéos sans télécharger de logiciel lourd. Ouvrez votre navigateur, connectez-vous et commencez à monter immédiatement — idéal pour travailler sur plusieurs appareils.</p>
+        </article>
+        <article class="feature-card reveal reveal-delay-2">
+          <div class="feature-icon" aria-hidden="true">📐</div>
+          <h3>Timeline multi-pistes</h3>
+          <p>Superposez vidéos, images, textes et pistes audio sur une timeline précise. Découpez, recadrez et organisez vos séquences comme dans un logiciel de montage professionnel.</p>
+        </article>
+        <article class="feature-card reveal reveal-delay-3">
+          <div class="feature-icon" aria-hidden="true">✨</div>
+          <h3>Effets et transitions</h3>
+          <p>Appliquez des filtres, des transitions fluides, du color grading et des animations de texte pour donner un rendu soigné à vos contenus, que ce soit pour YouTube, TikTok ou Instagram.</p>
+        </article>
+        <article class="feature-card reveal reveal-delay-4">
+          <div class="feature-icon" aria-hidden="true">📤</div>
+          <h3>Export HD (MP4 / WebM)</h3>
+          <p>Exportez vos projets finis en haute définition, prêts à être publiés sur les réseaux sociaux ou intégrés dans vos formations en ligne. Qualité professionnelle, sans watermark.</p>
+        </article>
+        <article class="feature-card reveal reveal-delay-5">
+          <div class="feature-icon" aria-hidden="true">🔒</div>
+          <h3>Confidentialité locale</h3>
+          <p>Vos fichiers médias restent sur votre appareil. Le traitement vidéo s'effectue localement dans le navigateur — vos rushes ne sont pas envoyés sur un serveur distant.</p>
+        </article>
+        <article class="feature-card reveal reveal-delay-5">
+          <div class="feature-icon" aria-hidden="true">🌍</div>
+          <h3>Conçu pour l'Afrique</h3>
+          <p>Développé par GUELICHWEB au Bénin, CapCut Studio est pensé pour les créateurs africains : interface en français, accès gratuit et performances optimisées pour une connexion locale.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="landing-section" id="comment-ca-marche" aria-labelledby="steps-title">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-label">Comment ça marche</span>
+        <h2 class="section-title" id="steps-title">Trois étapes pour votre première vidéo</h2>
+        <p class="section-lead section-lead--center">
+          Pas besoin d'expérience en montage vidéo. Créez votre compte et lancez-vous en quelques minutes.
+        </p>
+      </div>
+      <div class="steps">
+        <article class="step-card reveal reveal-delay-1">
+          <div class="step-line" aria-hidden="true"></div>
+          <h3>Créez votre compte gratuit</h3>
+          <p>Inscrivez-vous en quelques secondes avec votre adresse e-mail. Aucun paiement requis — l'accès à l'éditeur est gratuit pour l'instant. Vous recevez immédiatement vos identifiants de connexion.</p>
+        </article>
+        <article class="step-card reveal reveal-delay-2">
+          <div class="step-line" aria-hidden="true"></div>
+          <h3>Importez et montez</h3>
+          <p>Glissez-déposez vos vidéos, images et fichiers audio dans la timeline. Découpez les séquences, ajoutez des transitions, des sous-titres et des effets visuels pour raconter votre histoire.</p>
+        </article>
+        <article class="step-card reveal reveal-delay-3">
+          <div class="step-line" aria-hidden="true"></div>
+          <h3>Exportez et partagez</h3>
+          <p>Lancez l'export en HD et téléchargez votre fichier MP4 ou WebM. Publiez-le sur TikTok, Instagram Reels, YouTube Shorts ou intégrez-le dans vos cours et présentations.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Use cases -->
+    <section class="landing-section" id="cas-usage" aria-labelledby="usecases-title">
+      <div class="reveal">
+        <span class="section-label">Cas d'usage</span>
+        <h2 class="section-title" id="usecases-title">Pour qui est fait CapCut Studio ?</h2>
+        <p class="section-lead">
+          Que vous soyez créateur de contenu, formateur ou entrepreneur, notre éditeur vidéo en ligne s'adapte à vos besoins de production.
+        </p>
+      </div>
+      <div class="usecases-grid">
+        <article class="usecase-card reveal reveal-delay-1">
+          <h3>Créateurs de contenu</h3>
+          <p>Produisez des vidéos courtes pour TikTok, Instagram Reels et YouTube Shorts sans quitter votre navigateur. Montage rapide, export immédiat — parfait pour publier régulièrement et développer votre audience.</p>
+        </article>
+        <article class="usecase-card reveal reveal-delay-2">
+          <h3>Réseaux sociaux &amp; marketing</h3>
+          <p>Créez des publicités, des teasers produit et des stories animées pour vos campagnes digitales. L'interface intuitive permet à toute l'équipe de produire du contenu vidéo sans compétences techniques avancées.</p>
+        </article>
+        <article class="usecase-card reveal reveal-delay-3">
+          <h3>Formations &amp; éducation</h3>
+          <p>Enseignants, coachs et formateurs : montez des modules vidéo, ajoutez des sous-titres et exportez des supports pédagogiques de qualité pour vos cours en ligne ou vos webinaires.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- SEO rich content -->
+    <section class="landing-section landing-section--tight" id="a-propos" aria-labelledby="about-title">
+      <article class="seo-block reveal">
+        <h2 id="about-title">Pourquoi choisir CapCut Studio comme alternative CapCut ?</h2>
+        <p>
+          Le montage vidéo est devenu indispensable pour communiquer sur Internet. Pourtant, les logiciels traditionnels comme Adobe Premiere ou DaVinci Resolve demandent une installation lourde, une machine puissante et souvent un abonnement coûteux. CapCut, très populaire sur mobile, ne propose pas toujours une expérience complète sur ordinateur, et ses conditions d'utilisation peuvent poser question pour un usage professionnel.
+        </p>
+        <p>
+          CapCut Studio, développé par <strong>GUELICHWEB</strong> au Bénin, répond à ce besoin avec un <strong>éditeur vidéo en ligne</strong> accessible depuis n'importe quel navigateur moderne. Vous bénéficiez d'une timeline multi-pistes, d'outils de découpage précis, d'effets visuels, de transitions et d'un export en haute définition — le tout sans installer quoi que ce soit sur votre machine. C'est la solution idéale pour <strong>créer des vidéos dans le navigateur</strong>, que vous soyez à Cotonou, Abidjan, Dakar ou Paris.
+        </p>
+        <p>
+          Contrairement aux services qui hébergent vos fichiers sur leurs serveurs, CapCut Studio traite vos médias localement dans le navigateur grâce aux technologies Web modernes (WebCodecs, WebGPU). Vos rushes restent sur votre appareil, ce qui garantit une confidentialité maximale — un avantage crucial pour les entreprises, les journalistes et les créateurs qui travaillent avec du contenu sensible.
+        </p>
+        <p>
+          Notre plateforme de <strong>montage vidéo gratuit</strong> est actuellement accessible sans frais. Créez votre compte, connectez-vous et accédez immédiatement à l'éditeur complet. Des forfaits payants pourront être proposés à l'avenir pour des fonctionnalités avancées, mais l'essentiel du montage reste accessible à tous les créateurs africains et francophones qui souhaitent produire du contenu de qualité sans barrière financière.
+        </p>
+        <p>
+          Que vous cherchiez une <strong>alternative CapCut</strong> pour votre ordinateur, un outil de montage pour vos formations ou une solution vidéo pour votre entreprise en Afrique de l'Ouest, CapCut Studio est fait pour vous. Rejoignez les créateurs qui font confiance à GUELICHWEB pour leurs productions vidéo en ligne.
+        </p>
       </article>
     </section>
 
-    <div class="pricing-note">
-      <p><strong>Gratuit pour l'instant</strong> — Créez votre compte et accédez immédiatement à l'éditeur. Aucun paiement requis.</p>
-    </div>
+    <!-- FAQ -->
+    <section class="landing-section" id="faq" aria-labelledby="faq-title">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title" id="faq-title">Questions fréquentes sur CapCut Studio</h2>
+        <p class="section-lead section-lead--center">
+          Tout ce que vous devez savoir avant de commencer votre premier montage vidéo en ligne.
+        </p>
+      </div>
+      <div class="faq-list reveal">
+        <details class="faq-item">
+          <summary>CapCut Studio est-il vraiment gratuit ?</summary>
+          <div class="faq-answer">
+            Oui, l'accès à l'éditeur vidéo en ligne est gratuit pour l'instant. Créez un compte sans carte bancaire et commencez à monter vos vidéos immédiatement. Des forfaits payants pourront être proposés ultérieurement pour des fonctionnalités premium, mais le cœur de l'éditeur reste accessible gratuitement.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Dois-je installer un logiciel sur mon ordinateur ?</summary>
+          <div class="faq-answer">
+            Non. CapCut Studio fonctionne entièrement dans votre navigateur web (Chrome, Firefox, Edge ou Safari récent). Aucune installation, aucun téléchargement de logiciel lourd. Connectez-vous à capcut.guelichweb.store et lancez-vous — c'est l'avantage principal d'un éditeur vidéo en ligne.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Mes vidéos sont-elles envoyées sur un serveur ?</summary>
+          <div class="faq-answer">
+            Non. Vos fichiers médias (vidéos, images, audio) restent sur votre appareil. Le montage et l'export s'effectuent localement dans le navigateur grâce aux technologies Web modernes. Seul votre compte utilisateur (email, abonnement) est stocké de manière sécurisée sur nos serveurs.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Quels formats d'export sont disponibles ?</summary>
+          <div class="faq-answer">
+            Vous pouvez exporter vos projets en MP4 et WebM, en haute définition. Ces formats sont compatibles avec YouTube, TikTok, Instagram, Facebook et la plupart des plateformes de diffusion vidéo. L'export se fait directement depuis votre navigateur, sans passer par un serveur tiers.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>CapCut Studio est-il une alternative à CapCut ?</summary>
+          <div class="faq-answer">
+            Oui. CapCut Studio offre une expérience de montage vidéo similaire — timeline multi-pistes, effets, transitions, export HD — mais directement dans le navigateur sur ordinateur, sans application mobile. Développé par GUELICHWEB au Bénin, c'est une alternative pensée pour les créateurs francophones et africains.
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Quel navigateur et quel matériel sont recommandés ?</summary>
+          <div class="faq-answer">
+            Nous recommandons Google Chrome ou Microsoft Edge (versions récentes) sur un ordinateur avec au moins 8 Go de RAM pour un montage fluide. Une connexion Internet stable est nécessaire pour la connexion au compte, mais le montage lui-même fonctionne hors ligne une fois l'éditeur chargé.
+          </div>
+        </details>
+      </div>
+    </section>
 
-    <footer class="site-footer">
-      <a href="/cgu">CGU</a> · <a href="/confidentialite">Confidentialité</a>
+    <!-- Final CTA -->
+    <section class="landing-section landing-section--tight" aria-labelledby="cta-title">
+      <div class="cta-banner reveal">
+        <h2 id="cta-title">Prêt à créer votre première vidéo ?</h2>
+        <p>Rejoignez CapCut Studio gratuitement et découvrez le montage vidéo professionnel dans votre navigateur — propulsé par GUELICHWEB.</p>
+        <div class="hero-cta">
+          <a href="/inscription" class="btn btn-primary btn-lg">S'inscrire gratuitement</a>
+          <a href="/connexion" class="btn btn-secondary btn-lg">Se connecter</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="landing-footer">
+      <a href="/cgu">Conditions générales d'utilisation</a>
+      ·
+      <a href="/confidentialite">Politique de confidentialité</a>
+      <p>© 2026 CapCut Studio — Propulsé par <a href="https://guelichweb.store" target="_blank" rel="noopener noreferrer">GUELICHWEB</a></p>
     </footer>
-  </div>
+
+  </main>
 
   <footer class="guelichweb-footer" role="contentinfo">
     <div class="brand-footer">
       <span class="brand-footer-label">Propulsé par</span>
       <a class="brand-logo" href="https://guelichweb.store" target="_blank" rel="noopener noreferrer" aria-label="GUELICHWEB">
-        <img src="/brand/guelichweb-horizontal.png" alt="GUELICHWEB" width="140" height="28" loading="lazy" />
+        <img src="/brand/guelichweb-horizontal.png" alt="GUELICHWEB — éditeur vidéo en ligne CapCut Studio" width="140" height="28" loading="lazy" decoding="async" />
       </a>
     </div>
   </footer>
 
   <script>
-    fetch("/api/auth/session").then((r) => r.json()).then((data) => {
+    /* Scroll reveal via Intersection Observer */
+    (function () {
+      var els = document.querySelectorAll(".reveal, .step-card");
+      if (!("IntersectionObserver" in window)) {
+        els.forEach(function (el) { el.classList.add("is-visible"); });
+        return;
+      }
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-visible");
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+      els.forEach(function (el) { obs.observe(el); });
+    })();
+
+    /* Redirect authenticated users to editor */
+    fetch("/api/auth/session").then(function (r) { return r.json(); }).then(function (data) {
       if (data.authenticated && data.hasAccess) {
         location.href = "/index.html";
       }
-    }).catch(() => {});
+    }).catch(function () {});
   </script>
 </body>
 </html>
