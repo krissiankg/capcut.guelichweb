@@ -1,0 +1,41 @@
+/* Shared GUELICHWEB branding — CapCut Studio portal */
+.brand-nowrap {
+  white-space: nowrap;
+}
+
+.guelichweb-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 0.7rem;
+  color: #6b7368;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.guelichweb-footer p {
+  margin: 0;
+}
+
+.guelichweb-footer .brand-name {
+  white-space: nowrap;
+  font-weight: 600;
+  color: #9ca493;
+}
+
+.guelichweb-footer img.brand-logo {
+  height: 18px;
+  width: auto;
+  vertical-align: middle;
+  margin-right: 6px;
+  opacity: 0.85;
+  filter: brightness(1.1);
+}
+
+body.has-brand-footer {
+  padding-bottom: 44px;
+}

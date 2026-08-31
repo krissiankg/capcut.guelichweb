@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CapCut Studio — Éditeur vidéo professionnel dans le navigateur</title>
+  <meta name="description" content="CapCut Studio — montage vidéo multi-pistes, effets, export 4K. Gratuit pour l'instant. Éditeur professionnel dans votre navigateur." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/portal-brand.css" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #171d17;
+      --border: #30382f;
+      --text: #f4f2e8;
+      --muted: #9ca493;
+      --accent: #aa9158;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(170, 145, 88, 0.2), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(48, 56, 47, 0.55), transparent);
+      pointer-events: none;
+    }
+    .page {
+      position: relative;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 64px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 10px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.btn-primary {
+      background: linear-gradient(135deg, var(--accent), #8a7344);
+      color: #0a0a0a;
+      font-weight: 600;
+    }
+    .nav-links a.btn-primary:hover { filter: brightness(1.08); }
+    .hero {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+    .hero h1 {
+      margin: 0 0 20px;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero .lead {
+      margin: 0 auto 36px;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+    }
+    .cta-row a {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: filter 0.15s, transform 0.1s;
+    }
+    .cta-row a:active { transform: scale(0.99); }
+    .cta-row a.primary {
+      background: linear-gradient(135deg, var(--accent), #8a7344);
+      color: #0a0a0a;
+    }
+    .cta-row a.primary:hover { filter: brightness(1.08); }
+    .cta-row a.secondary {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: var(--surface);
+    }
+    .cta-row a.secondary:hover { border-color: var(--accent); }
+    .features {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      margin-bottom: 64px;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+    }
+    .feature-card h2 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      color: var(--accent);
+    }
+    .feature-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+    .pricing-note {
+      text-align: center;
+      padding: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 48px;
+    }
+    .pricing-note p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .pricing-note strong { color: var(--accent); }
+    .site-footer {
+      text-align: center;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .site-footer a { color: var(--accent); text-decoration: none; }
+    .site-footer a:hover { text-decoration: underline; }
+    .site-footer p { margin: 8px 0 0; }
+  </style>
+</head>
+<body class="has-brand-footer">
+  <div class="page">
+    <nav class="top-nav" aria-label="Navigation principale">
+      <span class="badge">CapCut Studio · <span class="brand-nowrap">GUELICHWEB</span></span>
+      <div class="nav-links">
+        <a href="/connexion">Se connecter</a>
+        <a href="/inscription" class="btn-primary">S'inscrire</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <h1>CapCut Studio — éditeur vidéo professionnel dans le navigateur</h1>
+      <p class="lead">
+        Montez, exportez et partagez vos vidéos sans installation.
+        Timeline multi-pistes, effets, transitions et export haute qualité — le tout dans votre navigateur.
+      </p>
+      <div class="cta-row">
+        <a href="/inscription" class="primary">Commencer gratuitement</a>
+        <a href="/connexion" class="secondary">Se connecter</a>
+      </div>
+    </header>
+
+    <section class="features" aria-label="Fonctionnalités">
+      <article class="feature-card">
+        <h2>Montage professionnel</h2>
+        <p>Timeline multi-pistes, découpage précis, transitions fluides et outils de montage avancés pour des vidéos soignées.</p>
+      </article>
+      <article class="feature-card">
+        <h2>Export haute qualité</h2>
+        <p>Exportez vos projets en MP4 ou WebM. Effets, sous-titres, color grading — tout ce qu'il faut pour un rendu pro.</p>
+      </article>
+      <article class="feature-card">
+        <h2>100 % navigateur</h2>
+        <p>Vos médias restent sur votre appareil. Pas d'upload serveur — confidentialité maximale et performances locales.</p>
+      </article>
+    </section>
+
+    <div class="pricing-note">
+      <p><strong>Gratuit pour l'instant</strong> — Créez votre compte et accédez immédiatement à l'éditeur. Aucun paiement requis.</p>
+    </div>
+
+    <footer class="site-footer">
+      <a href="/cgu">CGU</a> · <a href="/confidentialite">Confidentialité</a>
+      <p><a href="/connexion">Supprimer mon compte</a> (connexion requise)</p>
+    </footer>
+  </div>
+
+  <footer class="guelichweb-footer" role="contentinfo">
+    <p>Propulsé par <span class="brand-name brand-nowrap">GUELICHWEB</span></p>
+  </footer>
+
+  <script>
+    fetch("/api/auth/session").then((r) => r.json()).then((data) => {
+      if (data.authenticated && data.hasAccess) {
+        location.href = "/index.html";
+      }
+    }).catch(() => {});
+  </script>
+</body>
+</html>

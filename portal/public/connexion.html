@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Connexion — CapCut Studio · Guelich Web</title>
+  <title>Connexion — CapCut Studio · GUELICHWEB</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/portal-brand.css" />
   <style>
     :root {
       --bg: #0a0a0a;
@@ -157,10 +158,10 @@
     .footer-links a:hover { text-decoration: underline; }
   </style>
 </head>
-<body>
+<body class="has-brand-footer">
   <div class="layout">
     <div class="hero">
-      <span class="badge">CapCut Studio · GUELICHWEB</span>
+      <span class="badge">CapCut Studio · <span class="brand-nowrap">GUELICHWEB</span></span>
       <h1>Montage vidéo professionnel dans votre navigateur</h1>
       <p>
         Accédez à l'éditeur CapCut Studio — timeline multi-pistes, effets, export 4K.
@@ -197,14 +198,18 @@
         Pas encore de compte ? <a href="/inscription">Inscription gratuite</a>
       </p>
       <p class="footer-links" style="margin-top:10px;font-size:0.8rem;">
-        <a href="/cgu">CGU</a> · <a href="/confidentialite">Confidentialité</a>
+        <a href="/cgu">CGU</a> · <a href="/confidentialite">Confidentialité</a> · <a href="/supprimer-mon-compte">Supprimer mon compte</a>
       </p>
     </div>
   </div>
 
+  <footer class="guelichweb-footer" role="contentinfo">
+    <p>Propulsé par <span class="brand-name brand-nowrap">GUELICHWEB</span></p>
+  </footer>
+
   <script>
     const params = new URLSearchParams(location.search);
-    const next = params.get("next") || "/";
+    const next = params.get("next") || "/index.html";
     const errorEl = document.getElementById("error");
     const successEl = document.getElementById("success");
     const form = document.getElementById("login-form");
@@ -258,7 +263,7 @@
 
     fetch("/api/auth/session").then((r) => r.json()).then((data) => {
       if (data.authenticated && data.hasAccess) {
-        location.href = next.startsWith("/") ? next : "/";
+        location.href = next.startsWith("/") ? next : "/index.html";
       }
     }).catch(() => {});
   </script>

@@ -8,9 +8,10 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Administration — CapCut Studio</title>
+  <title>Administration — CapCut Studio · GUELICHWEB</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/portal-brand.css" />
 
   <style>
 
@@ -108,7 +109,7 @@
 
 </head>
 
-<body>
+<body class="has-brand-footer">
 
   <header>
 
@@ -116,7 +117,7 @@
 
     <div>
 
-      <a href="/" style="color:var(--accent);margin-right:16px;text-decoration:none;">Éditeur</a>
+      <a href="/index.html" style="color:var(--accent);margin-right:16px;text-decoration:none;">Éditeur</a>
 
       <button class="secondary" id="logout">Déconnexion</button>
 
@@ -216,6 +217,10 @@
 
   </main>
 
+  <footer class="guelichweb-footer" role="contentinfo">
+    <p>Propulsé par <span class="brand-name brand-nowrap">GUELICHWEB</span></p>
+  </footer>
+
   <script>
 
     const msg = document.getElementById("msg");
@@ -225,6 +230,24 @@
       msg.textContent = text;
 
       msg.className = "msg " + (ok ? "ok" : "err");
+
+    }
+
+
+
+    async function deleteUser(id, email) {
+
+      if (!confirm(`Supprimer définitivement le compte ${email} ? Cette action est irréversible.`)) return;
+
+      const res = await fetch(`/api/admin/users/${id}`, { method: "DELETE" });
+
+      const data = await res.json();
+
+      if (!res.ok) { show(data.error || "Erreur", false); return; }
+
+      show(data.message || "Utilisateur supprimé.", true);
+
+      load();
 
     }
 
@@ -286,6 +309,12 @@
 
               ${u.is_active ? "Désactiver" : "Réactiver"}
 
+            </button>
+
+            <button type="button" class="secondary small" data-delete="${u.id}" data-email="${u.email}" style="margin-left:6px;color:#f5a5a5;">
+
+              Supprimer
+
             </button>` : "—"}
 
           </td>
@@ -301,6 +330,18 @@
         btn.addEventListener("click", () => {
 
           toggleUser(btn.dataset.id, btn.dataset.active === "true");
+
+        });
+
+      });
+
+
+
+      document.querySelectorAll("[data-delete]").forEach((btn) => {
+
+        btn.addEventListener("click", () => {
+
+          deleteUser(btn.dataset.delete, btn.dataset.email);
 
         });
 

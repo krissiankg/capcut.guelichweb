@@ -14,6 +14,7 @@ import {
 import {
   createFreeAccess,
   createUser,
+  deleteUserById,
   findUserByEmail,
   findUserById,
   getActiveSubscription,
@@ -21,6 +22,12 @@ import {
 } from "../db/users.js";
 import { sendEmail } from "../email/resend.js";
 import { passwordResetEmail, welcomeEmail } from "../email/templates.js";
+import {
+  deleteAccountLimiter,
+  forgotPasswordLimiter,
+  loginLimiter,
+  registerLimiter,
+} from "../middleware/rate-limit.js";
 
 export const authRouter = Router();
 
@@ -83,7 +90,7 @@ authRouter.get("/session", async (req, res) => {
   });
 });
 
-authRouter.post("/login", async (req, res) => {
+authRouter.post("/login", loginLimiter, async (req, res) => {
   try {
     const email = String(req.body?.email ?? "").trim().toLowerCase();
     const password = String(req.body?.password ?? "");
@@ -125,7 +132,7 @@ authRouter.post("/login", async (req, res) => {
 
     res.json({
       ok: true,
-      redirectTo: user.role === "admin" ? "/admin" : "/",
+      redirectTo: user.role === "admin" ? "/admin" : "/index.html",
       user: { email: user.email, fullName: user.full_name, role: user.role },
       subscription: subscription
         ? { status: subscription.status, endsAt: subscription.ends_at }
@@ -137,7 +144,7 @@ authRouter.post("/login", async (req, res) => {
   }
 });
 
-authRouter.post("/register", async (req, res) => {
+authRouter.post("/register", registerLimiter, async (req, res) => {
   try {
     const email = String(req.body?.email ?? "").trim().toLowerCase();
     const password = String(req.body?.password ?? "");
@@ -202,7 +209,7 @@ authRouter.post("/register", async (req, res) => {
 
     res.status(201).json({
       ok: true,
-      redirectTo: "/",
+      redirectTo: "/index.html",
       user: { email: user.email, fullName: user.full_name, role: user.role },
     });
   } catch (error) {
@@ -214,7 +221,7 @@ authRouter.post("/register", async (req, res) => {
 const forgotPasswordMessage =
   "Si un compte existe avec cet email, un lien de réinitialisation vient d'être envoyé.";
 
-authRouter.post("/forgot-password", async (req, res) => {
+authRouter.post("/forgot-password", forgotPasswordLimiter, async (req, res) => {
   try {
     const email = String(req.body?.email ?? "").trim().toLowerCase();
     if (!email) {
@@ -296,4 +303,61 @@ authRouter.post("/reset-password", async (req, res) => {
 authRouter.post("/logout", (_req, res) => {
   clearSessionCookie(res);
   res.json({ ok: true, redirectTo: "/connexion" });
+});
+
+authRouter.post("/delete-account", deleteAccountLimiter, async (req, res) => {
+  try {
+    const session = getSession(req);
+    if (!session) {
+      res.status(401).json({ error: "Connexion requise." });
+      return;
+    }
+
+    const password = String(req.body?.password ?? "");
+    const confirmDeletion = Boolean(req.body?.confirmDeletion);
+
+    if (!password) {
+      res.status(400).json({ error: "Mot de passe requis." });
+      return;
+    }
+
+    if (!confirmDeletion) {
+      res.status(400).json({
+        error: "Vous devez confirmer la suppression définitive de votre compte.",
+      });
+      return;
+    }
+
+    const user = await findUserById(session.userId);
+    if (!user || !user.is_active) {
+      res.status(401).json({ error: "Compte introuvable ou déjà supprimé." });
+      return;
+    }
+
+    if (user.role === "admin") {
+      res.status(403).json({
+        error:
+          "Les comptes administrateur ne peuvent pas être supprimés via cette page. Contactez le support.",
+      });
+      return;
+    }
+
+    const valid = await verifyPassword(password, user.password_hash);
+    if (!valid) {
+      res.status(401).json({ error: "Mot de passe incorrect." });
+      return;
+    }
+
+    await deleteUserById(user.id);
+    clearSessionCookie(res);
+
+    res.json({
+      ok: true,
+      message: "Votre compte a été supprimé définitivement.",
+      redirectTo: "/",
+    });
+  } catch (error) {
+    console.error("delete-account error", error);
+    res.status(500).json({ error: "Erreur serveur lors de la suppression du compte." });
+  }
 });

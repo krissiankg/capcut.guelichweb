@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mot de passe oublié — CapCut Studio · Guelich Web</title>
+  <title>Mot de passe oublié — CapCut Studio · GUELICHWEB</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/portal-brand.css" />
   <style>
     :root {
       --bg: #0a0a0a;
@@ -106,9 +107,9 @@
     .footer-links a:hover { text-decoration: underline; }
   </style>
 </head>
-<body>
+<body class="has-brand-footer">
   <div class="card">
-    <span class="badge">CapCut Studio</span>
+    <span class="badge">CapCut Studio · <span class="brand-nowrap">GUELICHWEB</span></span>
     <h1>Mot de passe oublié</h1>
     <p class="lead">Entrez votre email. Si un compte existe, nous vous enverrons un lien de réinitialisation.</p>
 
@@ -125,6 +126,10 @@
       <a href="/connexion">Retour à la connexion</a>
     </p>
   </div>
+
+  <footer class="guelichweb-footer" role="contentinfo">
+    <p>Propulsé par <span class="brand-name brand-nowrap">GUELICHWEB</span></p>
+  </footer>
 
   <script>
     const errorEl = document.getElementById("error");

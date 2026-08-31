@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Réinitialiser le mot de passe — CapCut Studio · GUELICHWEB</title>
+  <title>Supprimer mon compte — CapCut Studio · GUELICHWEB</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -43,7 +43,7 @@
     .card {
       position: relative;
       width: 100%;
-      max-width: 440px;
+      max-width: 480px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 20px;
@@ -59,8 +59,19 @@
       color: var(--accent);
       margin-bottom: 14px;
     }
-    h1 { margin: 0 0 8px; font-size: 1.35rem; }
-    p.lead { margin: 0 0 22px; font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+    h1 { margin: 0 0 8px; font-size: 1.35rem; color: #f5a5a5; }
+    p.lead { margin: 0 0 20px; font-size: 0.88rem; color: var(--muted); line-height: 1.55; }
+    .warning-box {
+      margin-bottom: 22px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(220, 76, 76, 0.35);
+      background: rgba(220, 76, 76, 0.08);
+      font-size: 0.85rem;
+      color: #e8b4b4;
+      line-height: 1.5;
+    }
+    .warning-box ul { margin: 8px 0 0; padding-left: 1.2rem; }
     label {
       display: block;
       font-size: 0.8rem;
@@ -68,7 +79,7 @@
       color: var(--muted);
       margin-bottom: 6px;
     }
-    input {
+    input[type="password"] {
       width: 100%;
       padding: 12px 14px;
       border-radius: 12px;
@@ -79,19 +90,40 @@
       margin-bottom: 16px;
       outline: none;
     }
-    input:focus { border-color: var(--accent); }
+    input[type="password"]:focus { border-color: var(--accent); }
+    .confirm-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+    .confirm-row input {
+      width: 16px;
+      height: 16px;
+      margin: 2px 0 0;
+      flex-shrink: 0;
+      accent-color: var(--error);
+    }
+    .confirm-row span {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
     button {
       width: 100%;
       padding: 13px 16px;
       border: none;
       border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), #8a7344);
-      color: #0a0a0a;
+      background: #8b2e2e;
+      color: #fff;
       font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;
+      transition: filter 0.15s;
     }
-    button:disabled { opacity: 0.6; cursor: wait; }
+    button:hover:not(:disabled) { filter: brightness(1.1); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
     .error, .success {
       display: none;
       margin-bottom: 14px;
@@ -105,31 +137,41 @@
     .footer-links { margin-top: 18px; text-align: center; font-size: 0.85rem; color: var(--muted); }
     .footer-links a { color: var(--accent); text-decoration: none; }
     .footer-links a:hover { text-decoration: underline; }
-    .hint { font-size: 0.75rem; color: var(--muted); margin: -10px 0 14px; }
   </style>
 </head>
 <body class="has-brand-footer">
   <div class="card">
     <span class="badge">CapCut Studio · <span class="brand-nowrap">GUELICHWEB</span></span>
-    <h1>Nouveau mot de passe</h1>
-    <p class="lead">Choisissez un nouveau mot de passe pour votre compte.</p>
+    <h1>Supprimer mon compte</h1>
+    <p class="lead">Cette action est irréversible et conforme à votre droit à l'effacement (RGPD).</p>
+
+    <div class="warning-box" role="alert">
+      <strong>Conséquences de la suppression :</strong>
+      <ul>
+        <li>Votre compte et vos identifiants seront définitivement effacés</li>
+        <li>Vos abonnements et accès seront annulés</li>
+        <li>Vous ne pourrez plus vous connecter à CapCut Studio</li>
+        <li>Les projets locaux sur votre appareil ne sont pas affectés</li>
+      </ul>
+    </div>
 
     <div id="error" class="error" role="alert"></div>
     <div id="success" class="success" role="status"></div>
 
-    <form id="reset-form">
-      <label for="password">Nouveau mot de passe</label>
-      <input id="password" name="password" type="password" autocomplete="new-password" required minlength="8" placeholder="••••••••" />
-      <p class="hint">Minimum 8 caractères</p>
+    <form id="delete-form">
+      <label for="password">Confirmez avec votre mot de passe</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••" />
 
-      <label for="confirmPassword">Confirmer le mot de passe</label>
-      <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" required placeholder="••••••••" />
+      <label class="confirm-row" for="confirmDeletion">
+        <input id="confirmDeletion" name="confirmDeletion" type="checkbox" required />
+        <span>Je confirme la suppression définitive de mon compte et de toutes les données associées.</span>
+      </label>
 
-      <button type="submit" id="submit-btn">Enregistrer</button>
+      <button type="submit" id="submit-btn" disabled>Supprimer définitivement mon compte</button>
     </form>
 
     <p class="footer-links">
-      <a href="/connexion">Retour à la connexion</a> · <a href="/mot-de-passe-oublie">Demander un nouveau lien</a>
+      <a href="/compte">Annuler — retour à mon compte</a>
     </p>
   </div>
 
@@ -138,54 +180,59 @@
   </footer>
 
   <script>
-    const params = new URLSearchParams(location.search);
-    const token = params.get("token") || "";
     const errorEl = document.getElementById("error");
     const successEl = document.getElementById("success");
-    const form = document.getElementById("reset-form");
+    const form = document.getElementById("delete-form");
     const submitBtn = document.getElementById("submit-btn");
+    const confirmCheckbox = document.getElementById("confirmDeletion");
+    const passwordInput = document.getElementById("password");
 
-    if (!token) {
-      errorEl.textContent = "Lien invalide. Demandez un nouveau lien de réinitialisation.";
-      errorEl.classList.add("visible");
-      submitBtn.disabled = true;
+    function updateSubmitState() {
+      submitBtn.disabled = !confirmCheckbox.checked || !passwordInput.value.trim();
     }
+
+    confirmCheckbox.addEventListener("change", updateSubmitState);
+    passwordInput.addEventListener("input", updateSubmitState);
+
+    fetch("/api/auth/session").then((r) => r.json()).then((data) => {
+      if (!data.authenticated) {
+        location.href = "/connexion?next=/supprimer-mon-compte";
+      }
+    }).catch(() => { location.href = "/connexion?next=/supprimer-mon-compte"; });
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       errorEl.classList.remove("visible");
       successEl.classList.remove("visible");
       submitBtn.disabled = true;
-      submitBtn.textContent = "Enregistrement…";
+      submitBtn.textContent = "Suppression…";
 
       try {
-        const res = await fetch("/api/auth/reset-password", {
+        const res = await fetch("/api/auth/delete-account", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            token,
-            password: document.getElementById("password").value,
-            confirmPassword: document.getElementById("confirmPassword").value,
+            password: passwordInput.value,
+            confirmDeletion: confirmCheckbox.checked,
           }),
         });
         const data = await res.json();
         if (!res.ok) {
-          errorEl.textContent = data.error || "Impossible de réinitialiser le mot de passe.";
+          errorEl.textContent = data.error || "Impossible de supprimer le compte.";
           errorEl.classList.add("visible");
+          updateSubmitState();
+          submitBtn.textContent = "Supprimer définitivement mon compte";
           return;
         }
-        successEl.textContent = data.message || "Mot de passe mis à jour.";
+        successEl.textContent = data.message || "Compte supprimé.";
         successEl.classList.add("visible");
         form.reset();
-        setTimeout(() => {
-          location.href = data.redirectTo || "/connexion?reset=1";
-        }, 1200);
+        setTimeout(() => { location.href = data.redirectTo || "/"; }, 1500);
       } catch {
         errorEl.textContent = "Erreur réseau. Réessayez.";
         errorEl.classList.add("visible");
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Enregistrer";
+        updateSubmitState();
+        submitBtn.textContent = "Supprimer définitivement mon compte";
       }
     });
   </script>

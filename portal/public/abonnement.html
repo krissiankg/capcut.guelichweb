@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Accès gratuit — CapCut Studio</title>
+  <title>Accès gratuit — CapCut Studio · GUELICHWEB</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/portal-brand.css" />
   <style>
     :root {
       --bg: #0a0a0a; --surface: #171d17; --border: #30382f;
@@ -43,10 +44,10 @@
     .back { color: var(--accent); text-decoration: none; font-size: 0.9rem; display: inline-block; margin-bottom: 24px; }
   </style>
 </head>
-<body>
+<body class="has-brand-footer">
   <div class="wrap">
     <a href="/connexion" class="back">← Retour connexion</a>
-    <span class="badge">CapCut Studio</span>
+    <span class="badge">CapCut Studio · <span class="brand-nowrap">GUELICHWEB</span></span>
     <h1>Accès gratuit</h1>
     <p class="lead">
       CapCut Studio est actuellement disponible gratuitement.
@@ -66,5 +67,9 @@
       <a class="btn secondary" href="/connexion">J'ai déjà un compte</a>
     </article>
   </div>
+
+  <footer class="guelichweb-footer" role="contentinfo">
+    <p>Propulsé par <span class="brand-name brand-nowrap">GUELICHWEB</span></p>
+  </footer>
 </body>
 </html>

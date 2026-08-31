@@ -247,3 +247,9 @@ export async function listAllSubscriptions(): Promise<
   if (error) throw error;
   return (data ?? []) as (CapcutSubscription & { user?: CapcutUserSummary })[];
 }
+
+export async function deleteUserById(userId: string): Promise<void> {
+  const { error } = await supabase.from("capcut_users").delete().eq("id", userId);
+
+  if (error) throw error;
+}

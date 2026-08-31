@@ -4,7 +4,9 @@ import { hashPassword } from "../auth/password.js";
 import {
   createSubscription,
   createUser,
+  deleteUserById,
   findUserByEmail,
+  findUserById,
   getActiveSubscription,
   listAllSubscriptions,
   listPublicPlans,
@@ -124,4 +126,33 @@ adminRouter.patch("/users/:id/active", async (req, res) => {
 adminRouter.get("/users/:id/subscription", async (req, res) => {
   const subscription = await getActiveSubscription(req.params.id);
   res.json({ subscription });
+});
+
+adminRouter.delete("/users/:id", async (req, res) => {
+  try {
+    const session = getSession(req)!;
+    const targetId = req.params.id;
+
+    if (targetId === session.userId) {
+      res.status(400).json({ error: "Vous ne pouvez pas supprimer votre propre compte admin ici." });
+      return;
+    }
+
+    const user = await findUserById(targetId);
+    if (!user) {
+      res.status(404).json({ error: "Utilisateur introuvable." });
+      return;
+    }
+
+    if (user.role === "admin") {
+      res.status(403).json({ error: "Impossible de supprimer un compte administrateur." });
+      return;
+    }
+
+    await deleteUserById(targetId);
+    res.json({ ok: true, message: `Compte ${user.email} supprimé.` });
+  } catch (error) {
+    console.error("admin delete user", error);
+    res.status(500).json({ error: "Impossible de supprimer l'utilisateur." });
+  }
 });
