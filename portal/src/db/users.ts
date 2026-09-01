@@ -251,7 +251,9 @@ export async function listAllSubscriptions(): Promise<
 > {
   const { data, error } = await supabase
     .from("capcut_subscriptions")
-    .select("*, plan:capcut_plans(*), user:capcut_users(id, email, full_name)")
+    .select(
+      "*, plan:capcut_plans(*), user:capcut_users!capcut_subscriptions_user_id_fkey(id, email, full_name)",
+    )
     .order("created_at", { ascending: false })
     .limit(200);
 
