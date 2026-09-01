@@ -203,7 +203,7 @@
       <span class="badge">CapCut Studio · <span class="brand-nowrap">GUELICHWEB</span></span>
       <h1>Inscription gratuite</h1>
       <p>
-        Créez votre compte en quelques secondes et accédez immédiatement à l'éditeur vidéo professionnel.
+        Créez votre compte en quelques secondes. Un e-mail de confirmation vous sera envoyé pour activer l'accès à l'éditeur.
         Aucun paiement requis pour l'instant.
       </p>
       <ul class="features">
@@ -318,7 +318,7 @@
           errorEl.classList.add("visible");
           return;
         }
-        location.href = data.redirectTo || "/index.html";
+        location.href = data.redirectTo || `/verification-en-attente?email=${encodeURIComponent(document.getElementById("email").value)}`;
       } catch {
         errorEl.textContent = "Erreur réseau. Réessayez.";
         errorEl.classList.add("visible");

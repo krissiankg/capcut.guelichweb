@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "hash-password": "tsx scripts/hash-password.ts",
-    "seed-admin": "tsx scripts/seed-admin.ts"
+    "seed-admin": "tsx scripts/seed-admin.ts",
+    "rotate-admin-password": "tsx scripts/rotate-admin-password.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",

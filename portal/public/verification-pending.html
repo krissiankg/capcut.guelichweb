@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vérifiez votre e-mail — CapCut Studio · GUELICHWEB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/portal-brand.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    h1 { margin: 0 0 8px; font-size: 1.35rem; }
+    p.lead { margin: 0 0 22px; font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+    .email-highlight {
+      color: var(--text);
+      font-weight: 600;
+      word-break: break-all;
+    }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface-input);
+      color: var(--text);
+      font: inherit;
+      margin-bottom: 16px;
+      outline: none;
+    }
+    input:focus { border-color: var(--accent); }
+    button {
+      width: 100%;
+      padding: 13px 16px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), #8a7344);
+      color: var(--on-accent);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    button:disabled { opacity: 0.6; cursor: wait; }
+    .error, .success, .info {
+      display: none;
+      margin-bottom: 14px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    .error { border: 1px solid rgba(220, 76, 76, 0.4); background: rgba(220, 76, 76, 0.1); color: #f5a5a5; }
+    .success { border: 1px solid rgba(76, 175, 122, 0.4); background: rgba(76, 175, 122, 0.1); color: #9fd4b5; }
+    .info { border: 1px solid rgba(170, 145, 88, 0.35); background: rgba(170, 145, 88, 0.1); color: var(--muted); }
+    .error.visible, .success.visible, .info.visible { display: block; }
+    .footer-links { margin-top: 18px; text-align: center; font-size: 0.85rem; color: var(--muted); }
+    .footer-links a { color: var(--accent); text-decoration: none; }
+    .footer-links a:hover { text-decoration: underline; }
+    ul.tips {
+      margin: 0 0 20px;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body class="has-brand-footer">
+  <div class="card">
+    <span class="badge">CapCut Studio · <span class="brand-nowrap">GUELICHWEB</span></span>
+    <h1>Vérifiez votre e-mail</h1>
+    <p class="lead">
+      Nous avons envoyé un lien de confirmation à
+      <span id="email-display" class="email-highlight">votre adresse e-mail</span>.
+      Cliquez sur le lien dans l'e-mail pour activer votre compte.
+    </p>
+
+    <div id="info" class="info visible" role="status">
+      Vérifiez aussi votre dossier spam ou courrier indésirable.
+    </div>
+    <div id="error" class="error" role="alert"></div>
+    <div id="success" class="success" role="status"></div>
+
+    <ul class="tips">
+      <li>Le lien expire après 24 heures</li>
+      <li>Une fois confirmé, connectez-vous pour accéder à l'éditeur</li>
+    </ul>
+
+    <form id="resend-form">
+      <label for="email">Renvoyer l'e-mail de confirmation</label>
+      <input id="email" name="email" type="email" autocomplete="email" required placeholder="vous@email.com" />
+      <button type="submit" id="submit-btn">Renvoyer l'e-mail</button>
+    </form>
+
+    <p class="footer-links">
+      <a href="/connexion">Aller à la connexion</a>
+    </p>
+  </div>
+
+  <footer class="guelichweb-footer" role="contentinfo">
+    <div class="brand-footer">
+      <span class="brand-footer-label">Propulsé par</span>
+      <a class="brand-logo" href="https://guelichweb.store" target="_blank" rel="noopener noreferrer" aria-label="GUELICHWEB">
+        <img src="/brand/guelichweb-horizontal.png" alt="GUELICHWEB" width="140" height="28" loading="lazy" />
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const emailParam = params.get("email") || "";
+    const emailInput = document.getElementById("email");
+    const emailDisplay = document.getElementById("email-display");
+    const errorEl = document.getElementById("error");
+    const successEl = document.getElementById("success");
+    const form = document.getElementById("resend-form");
+    const submitBtn = document.getElementById("submit-btn");
+
+    if (emailParam) {
+      emailInput.value = emailParam;
+      emailDisplay.textContent = emailParam;
+    }
+
+    if (params.get("error") === "expired") {
+      errorEl.textContent = "Votre lien de confirmation a expiré. Demandez un nouvel e-mail ci-dessous.";
+      errorEl.classList.add("visible");
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      errorEl.classList.remove("visible");
+      successEl.classList.remove("visible");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Envoi…";
+
+      try {
+        const res = await fetch("/api/auth/resend-verification", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: emailInput.value }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          errorEl.textContent = data.error || "Impossible d'envoyer l'e-mail.";
+          errorEl.classList.add("visible");
+          return;
+        }
+        successEl.textContent = data.message || "E-mail envoyé. Consultez votre boîte de réception.";
+        successEl.classList.add("visible");
+        emailDisplay.textContent = emailInput.value;
+      } catch {
+        errorEl.textContent = "Erreur réseau. Réessayez.";
+        errorEl.classList.add("visible");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Renvoyer l'e-mail";
+      }
+    });
+  </script>
+</body>
+</html>

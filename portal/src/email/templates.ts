@@ -83,6 +83,27 @@ export function welcomeEmail(fullName: string): { subject: string; html: string;
   return { subject, html, text };
 }
 
+export function emailVerificationEmail(
+  fullName: string,
+  verifyUrl: string,
+): { subject: string; html: string; text: string } {
+  const subject = "Confirmez votre adresse e-mail — CapCut Studio";
+  const html = layout(
+    "Confirmez votre e-mail",
+    `<p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:${brand.muted};">
+      Bonjour ${escapeHtml(fullName)},<br /><br />
+      Merci pour votre inscription sur CapCut Studio. Pour activer votre compte et accéder à l'éditeur vidéo,
+      veuillez confirmer votre adresse e-mail en cliquant sur le bouton ci-dessous.
+    </p>
+    ${button(verifyUrl, "Confirmer mon e-mail")}
+    <p style="margin:0;font-size:13px;color:${brand.muted};">
+      Ce lien est valable 24 heures. Si vous n'avez pas créé de compte, ignorez cet email.
+    </p>`,
+  );
+  const text = `Bonjour ${fullName},\n\nCapCut Studio (${BRAND_NAME}) — confirmez votre e-mail : ${verifyUrl}\n\nCe lien est valable 24 heures.\n\n${supportContactText()}`;
+  return { subject, html, text };
+}
+
 export function passwordResetEmail(
   fullName: string,
   resetUrl: string,

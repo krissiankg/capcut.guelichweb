@@ -28,6 +28,7 @@ async function main() {
     fullName,
     passwordHash: await hashPassword(password),
     role: "admin",
+    emailVerified: true,
   });
 
   await createSubscription({

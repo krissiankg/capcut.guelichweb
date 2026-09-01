@@ -234,6 +234,16 @@
       successEl.classList.add("visible");
     }
 
+    if (params.get("verified") === "1") {
+      successEl.textContent = "Votre e-mail est confirmé ! Vous pouvez maintenant vous connecter.";
+      successEl.classList.add("visible");
+    }
+
+    if (params.get("error") === "verification") {
+      errorEl.textContent = "Lien de vérification invalide ou expiré. Demandez un nouvel e-mail depuis la page de confirmation.";
+      errorEl.classList.add("visible");
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       errorEl.classList.remove("visible");
@@ -251,6 +261,10 @@
         });
         const data = await res.json();
         if (!res.ok) {
+          if (data.code === "EMAIL_NOT_VERIFIED" && data.resendUrl) {
+            location.href = data.resendUrl;
+            return;
+          }
           errorEl.textContent = data.error || "Connexion impossible.";
           errorEl.classList.add("visible");
           return;

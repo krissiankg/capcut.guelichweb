@@ -9,6 +9,9 @@ export interface CapcutUser {
   is_active: boolean;
   marketing_opt_in: boolean;
   marketing_opt_in_at: string | null;
+  email_verified: boolean;
+  email_verification_token: string | null;
+  email_verification_sent_at: string | null;
 }
 
 export interface CapcutPlan {
@@ -75,8 +78,11 @@ export async function createUser(input: {
   fullName: string;
   role?: "user" | "admin";
   marketingOptIn?: boolean;
+  emailVerified?: boolean;
+  emailVerificationToken?: string | null;
 }): Promise<CapcutUser> {
   const marketingOptIn = Boolean(input.marketingOptIn);
+  const emailVerified = input.emailVerified ?? input.role === "admin";
   const { data, error } = await supabase
     .from("capcut_users")
     .insert({
@@ -86,6 +92,11 @@ export async function createUser(input: {
       role: input.role ?? "user",
       marketing_opt_in: marketingOptIn,
       marketing_opt_in_at: marketingOptIn ? new Date().toISOString() : null,
+      email_verified: emailVerified,
+      email_verification_token: input.emailVerificationToken ?? null,
+      email_verification_sent_at: input.emailVerificationToken
+        ? new Date().toISOString()
+        : null,
     })
     .select("*")
     .single();

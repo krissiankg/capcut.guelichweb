@@ -28,3 +28,6 @@ export const forgotPasswordLimiter = createLimiter(60 * 60 * 1000, 3);
 
 /** POST /api/auth/delete-account — 3 per hour */
 export const deleteAccountLimiter = createLimiter(60 * 60 * 1000, 3);
+
+/** POST /api/auth/resend-verification — 3 per hour */
+export const resendVerificationLimiter = createLimiter(60 * 60 * 1000, 3);

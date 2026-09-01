@@ -12,6 +12,12 @@ import {
   markResetTokenUsed,
 } from "../db/password-reset.js";
 import {
+  findUserByVerificationToken,
+  generateVerificationToken,
+  markEmailVerified,
+  setEmailVerificationToken,
+} from "../db/email-verification.js";
+import {
   createFreeAccess,
   createUser,
   deleteUserById,
@@ -21,15 +27,37 @@ import {
   updateUserPassword,
 } from "../db/users.js";
 import { sendEmail } from "../email/resend.js";
-import { passwordResetEmail, welcomeEmail } from "../email/templates.js";
+import {
+  emailVerificationEmail,
+  passwordResetEmail,
+  welcomeEmail,
+} from "../email/templates.js";
 import {
   deleteAccountLimiter,
   forgotPasswordLimiter,
   loginLimiter,
   registerLimiter,
+  resendVerificationLimiter,
 } from "../middleware/rate-limit.js";
 
 export const authRouter = Router();
+
+const VERIFICATION_TOKEN_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+
+async function sendVerificationEmail(
+  user: { id: string; email: string; full_name: string },
+): Promise<void> {
+  const token = generateVerificationToken();
+  await setEmailVerificationToken(user.id, token);
+  const verifyUrl = `${config.appUrl}/api/auth/verify-email?token=${encodeURIComponent(token)}`;
+  const mail = emailVerificationEmail(user.full_name, verifyUrl);
+  void sendEmail({
+    to: user.email,
+    subject: mail.subject,
+    html: mail.html,
+    text: mail.text,
+  }).catch((err) => console.error("verification email error", err));
+}
 
 async function userHasAccess(userId: string, role: string): Promise<boolean> {
   if (role === "admin") return true;
@@ -46,6 +74,11 @@ authRouter.get("/verify", async (req, res) => {
 
   const user = await findUserById(session.userId);
   if (!user || !user.is_active) {
+    res.status(401).end();
+    return;
+  }
+
+  if (session.role !== "admin" && !user.email_verified) {
     res.status(401).end();
     return;
   }
@@ -109,6 +142,16 @@ authRouter.post("/login", loginLimiter, async (req, res) => {
     const valid = await verifyPassword(password, user.password_hash);
     if (!valid) {
       res.status(401).json({ error: "Identifiants incorrects." });
+      return;
+    }
+
+    if (user.role !== "admin" && !user.email_verified) {
+      res.status(403).json({
+        error:
+          "Veuillez confirmer votre adresse e-mail avant de vous connecter. Consultez votre boîte de réception ou renvoyez l'e-mail de confirmation.",
+        code: "EMAIL_NOT_VERIFIED",
+        resendUrl: `/verification-en-attente?email=${encodeURIComponent(user.email)}`,
+      });
       return;
     }
 
@@ -183,15 +226,63 @@ authRouter.post("/register", registerLimiter, async (req, res) => {
     }
 
     const displayName = fullName || email.split("@")[0] || "Utilisateur";
+    const verificationToken = generateVerificationToken();
 
     const user = await createUser({
       email,
       fullName: displayName,
       passwordHash: await hashPassword(password),
       marketingOptIn,
+      emailVerified: false,
+      emailVerificationToken: verificationToken,
     });
 
     await createFreeAccess(user.id);
+
+    const verifyUrl = `${config.appUrl}/api/auth/verify-email?token=${encodeURIComponent(verificationToken)}`;
+    const verificationMail = emailVerificationEmail(displayName, verifyUrl);
+    void sendEmail({
+      to: user.email,
+      subject: verificationMail.subject,
+      html: verificationMail.html,
+      text: verificationMail.text,
+    }).catch((err) => console.error("verification email error", err));
+
+    res.status(201).json({
+      ok: true,
+      redirectTo: `/verification-en-attente?email=${encodeURIComponent(user.email)}`,
+      message: "Un e-mail de confirmation vous a été envoyé.",
+      user: { email: user.email, fullName: user.full_name, role: user.role },
+    });
+  } catch (error) {
+    console.error("register error", error);
+    res.status(500).json({ error: "Erreur serveur lors de l'inscription." });
+  }
+});
+
+authRouter.get("/verify-email", async (req, res) => {
+  try {
+    const token = String(req.query.token ?? "").trim();
+    if (!token) {
+      res.redirect("/connexion?error=verification");
+      return;
+    }
+
+    const user = await findUserByVerificationToken(token);
+    if (!user) {
+      res.redirect("/connexion?error=verification");
+      return;
+    }
+
+    if (user.email_verification_sent_at) {
+      const sentAt = new Date(user.email_verification_sent_at).getTime();
+      if (Date.now() - sentAt > VERIFICATION_TOKEN_MAX_AGE_MS) {
+        res.redirect("/verification-en-attente?error=expired");
+        return;
+      }
+    }
+
+    await markEmailVerified(user.id);
 
     const welcome = welcomeEmail(user.full_name);
     void sendEmail({
@@ -201,20 +292,33 @@ authRouter.post("/register", registerLimiter, async (req, res) => {
       text: welcome.text,
     }).catch((err) => console.error("welcome email error", err));
 
-    setSessionCookie(res, {
-      userId: user.id,
-      email: user.email,
-      role: user.role,
-    });
-
-    res.status(201).json({
-      ok: true,
-      redirectTo: "/index.html",
-      user: { email: user.email, fullName: user.full_name, role: user.role },
-    });
+    res.redirect("/connexion?verified=1");
   } catch (error) {
-    console.error("register error", error);
-    res.status(500).json({ error: "Erreur serveur lors de l'inscription." });
+    console.error("verify-email error", error);
+    res.redirect("/connexion?error=verification");
+  }
+});
+
+const resendVerificationMessage =
+  "Si un compte non vérifié existe avec cet email, un nouveau lien de confirmation vient d'être envoyé.";
+
+authRouter.post("/resend-verification", resendVerificationLimiter, async (req, res) => {
+  try {
+    const email = String(req.body?.email ?? "").trim().toLowerCase();
+    if (!email) {
+      res.status(400).json({ error: "Email requis." });
+      return;
+    }
+
+    const user = await findUserByEmail(email);
+    if (user?.is_active && user.role !== "admin" && !user.email_verified) {
+      await sendVerificationEmail(user);
+    }
+
+    res.json({ ok: true, message: resendVerificationMessage });
+  } catch (error) {
+    console.error("resend-verification error", error);
+    res.status(500).json({ error: "Erreur serveur." });
   }
 });
 
