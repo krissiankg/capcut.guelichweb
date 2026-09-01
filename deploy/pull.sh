@@ -75,9 +75,14 @@ echo "==> Sync portal → ${PORTAL_ROOT}"
 rsync -a --delete \
   --exclude node_modules \
   --exclude .env \
-  --exclude 'deploy/monitoring/.kuma-admin.env' \
-  --exclude 'deploy/monitoring/node_modules' \
+  --exclude deploy \
   "${REPO_DIR}/portal/" "${PORTAL_ROOT}/"
+
+echo "==> Sync deploy/ (scripts, nginx, monitoring)..."
+rsync -a \
+  --exclude 'monitoring/.kuma-admin.env' \
+  --exclude 'monitoring/node_modules' \
+  "${REPO_DIR}/deploy/" "${PORTAL_ROOT}/deploy/"
 
 if [[ -n "${ENV_BACKUP}" ]]; then
   cp "${ENV_BACKUP}" "${PORTAL_ROOT}/.env"
