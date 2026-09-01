@@ -1,29 +1,33 @@
 /* CapCut Studio — GUELICHWEB portal theme
-   Inspired by EffyTech / FORGE IA: green-tinted anthracite, gold accents */
+   Premium dark with warm doré / gold accents */
 
 :root {
-  /* Base — green-tinted anthracite, NOT pure black */
-  --bg: #171d17;
-  --bg-deep: #141a14;
-  --bg-mid: #1a2119;
-  --surface: #1e261e;
-  --surface-raised: #242d24;
-  --surface-input: #121812;
-  --border: #30382f;
-  --border-subtle: rgba(215, 210, 197, 0.1);
+  /* Base — warm anthracite with gold undertones */
+  --bg: #1a1810;
+  --bg-deep: #12100a;
+  --bg-mid: #1f1c14;
+  --surface: #242018;
+  --surface-raised: #2c281e;
+  --surface-input: #16140e;
+  --border: #3d3528;
+  --border-subtle: rgba(212, 184, 122, 0.14);
+  --border-gold: rgba(212, 176, 88, 0.35);
 
-  /* Text — cream / off-white, not harsh white */
-  --text: #fbfaf4;
-  --text-secondary: #e8e6df;
-  --muted: #9ca493;
+  /* Text — warm cream */
+  --text: #fbf9f2;
+  --text-secondary: #ebe6d8;
+  --muted: #a89f8a;
 
-  /* Gold accents */
-  --accent: #aa9158;
-  --accent-hover: #c9a962;
-  --accent-dark: #8a7344;
-  --accent-darkest: #6e5d36;
-  --accent-glow: rgba(170, 145, 88, 0.22);
-  --on-accent: #171d17;
+  /* Gold accents — richer & warmer */
+  --accent: #c9a24e;
+  --accent-hover: #e0bc5c;
+  --accent-dark: #a88838;
+  --accent-darkest: #7a6428;
+  --accent-glow: rgba(212, 176, 88, 0.32);
+  --accent-glow-strong: rgba(224, 188, 92, 0.45);
+  --gold-light: #e8cc78;
+  --gold-amber: #d4a843;
+  --on-accent: #1a1810;
 
   /* Status */
   --error: #dc4c4c;
@@ -33,25 +37,36 @@
   --radius: 16px;
   --radius-sm: 12px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Watermark */
+  --logo-watermark-url: url("/brand/guelichweb-stacked.png");
+  --logo-watermark-ghost-url: url("/brand/guelichweb-medium.png");
 }
 
 /* ── Ambient background (auth, legal, account pages) ── */
 body:not(.landing) {
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 90% 55% at 50% -12%, rgba(212, 176, 88, 0.22), transparent 55%),
+    radial-gradient(ellipse 65% 45% at 100% 85%, rgba(168, 136, 56, 0.14), transparent 50%),
+    radial-gradient(ellipse 50% 38% at 0% 55%, rgba(201, 162, 78, 0.12), transparent 50%),
+    radial-gradient(ellipse 40% 30% at 80% 20%, rgba(224, 188, 92, 0.06), transparent 45%),
+    linear-gradient(165deg, #221e14 0%, var(--bg) 42%, var(--bg-deep) 100%);
   color: var(--text);
 }
 
-body:not(.landing)::before {
+/* Animated GUELICHWEB logo watermark — all portal pages */
+body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 90% 55% at 50% -12%, rgba(170, 145, 88, 0.16), transparent 55%),
-    radial-gradient(ellipse 65% 45% at 100% 85%, rgba(48, 56, 47, 0.42), transparent 50%),
-    radial-gradient(ellipse 50% 38% at 0% 55%, rgba(170, 145, 88, 0.07), transparent 50%),
-    linear-gradient(165deg, #1c241c 0%, var(--bg) 42%, var(--bg-deep) 100%);
+  user-select: none;
+  -webkit-user-select: none;
+  background: var(--logo-watermark-url) center 40% / min(400px, 52vw) no-repeat;
+  opacity: 0.055;
+  animation: logo-watermark-drift 34s var(--ease-out) infinite;
 }
 
 body:not(.landing)::after {
@@ -64,6 +79,96 @@ body:not(.landing)::after {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 180px 180px;
+}
+
+/* Keep page content above watermark layers */
+body > *:not(.guelichweb-footer):not(.bg-logo-watermark) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Animated logo watermark (landing enhanced — extra ghosts) ── */
+.bg-logo-watermark {
+  position: fixed;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  z-index: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.bg-logo-watermark--ghost-a {
+  width: min(180px, 28vw);
+  height: min(180px, 28vw);
+  top: 12%;
+  left: 6%;
+  background-image: var(--logo-watermark-ghost-url);
+  opacity: 0.04;
+  animation: logo-ghost-drift-a 42s var(--ease-out) infinite;
+}
+
+.bg-logo-watermark--ghost-b {
+  width: min(140px, 22vw);
+  height: min(140px, 22vw);
+  bottom: 18%;
+  right: 8%;
+  background-image: var(--logo-watermark-ghost-url);
+  opacity: 0.035;
+  animation: logo-ghost-drift-b 38s var(--ease-out) infinite reverse;
+}
+
+@keyframes logo-watermark-drift {
+  0%, 100% {
+    transform: translate(0, 0) rotate(-2deg) scale(1);
+    opacity: 0.045;
+  }
+  33% {
+    transform: translate(18px, -14px) rotate(1.5deg) scale(1.015);
+    opacity: 0.065;
+  }
+  66% {
+    transform: translate(-12px, 10px) rotate(-1deg) scale(0.99);
+    opacity: 0.05;
+  }
+}
+
+@keyframes logo-ghost-drift-a {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.035; }
+  50% { transform: translate(24px, 18px) rotate(4deg); opacity: 0.055; }
+}
+
+@keyframes logo-ghost-drift-b {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.03; }
+  50% { transform: translate(-20px, -16px) rotate(-3deg); opacity: 0.05; }
+}
+
+/* ── Shared gold glow on cards & CTAs ── */
+body:not(.landing) .card {
+  border-color: color-mix(in srgb, var(--border) 65%, var(--accent) 35%);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.45),
+    0 0 48px rgba(212, 176, 88, 0.08),
+    inset 0 1px 0 rgba(232, 204, 120, 0.06);
+}
+
+body:not(.landing) button[type="submit"],
+body:not(.landing) .btn-primary {
+  background: linear-gradient(135deg, var(--accent-hover), var(--accent-dark)) !important;
+  box-shadow: 0 4px 28px var(--accent-glow);
+}
+
+body:not(.landing) button[type="submit"]:hover,
+body:not(.landing) .btn-primary:hover {
+  box-shadow: 0 8px 36px var(--accent-glow-strong);
+}
+
+body:not(.landing) input:focus,
+body:not(.landing) select:focus,
+body:not(.landing) textarea:focus {
+  border-color: var(--accent-hover) !important;
+  box-shadow: 0 0 0 3px rgba(212, 176, 88, 0.15);
 }
 
 /* ── Shared GUELICHWEB branding ── */
@@ -105,11 +210,12 @@ body:not(.landing)::after {
   display: inline-flex;
   line-height: 0;
   text-decoration: none;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, filter 0.2s ease;
 }
 
 .brand-logo:hover {
-  opacity: 0.85;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 8px var(--accent-glow));
 }
 
 .brand-logo img {
@@ -143,4 +249,14 @@ body:not(.landing)::after {
 
 body.has-brand-footer {
   padding-bottom: 56px;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  .bg-logo-watermark {
+    animation: none !important;
+    opacity: 0.04 !important;
+    transform: none !important;
+  }
 }

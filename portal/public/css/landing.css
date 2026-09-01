@@ -32,10 +32,11 @@ body.landing {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 90% 55% at 50% -12%, rgba(170, 145, 88, 0.18), transparent 58%),
-    radial-gradient(ellipse 65% 45% at 100% 82%, rgba(48, 56, 47, 0.38), transparent 52%),
-    radial-gradient(ellipse 50% 38% at 0% 58%, rgba(170, 145, 88, 0.09), transparent 50%),
-    linear-gradient(168deg, #1c241c 0%, var(--bg) 40%, var(--bg-deep) 100%);
+    radial-gradient(ellipse 90% 55% at 50% -12%, rgba(212, 176, 88, 0.24), transparent 58%),
+    radial-gradient(ellipse 65% 45% at 100% 82%, rgba(168, 136, 56, 0.16), transparent 52%),
+    radial-gradient(ellipse 50% 38% at 0% 58%, rgba(201, 162, 78, 0.14), transparent 50%),
+    radial-gradient(ellipse 45% 35% at 75% 25%, rgba(224, 188, 92, 0.08), transparent 48%),
+    linear-gradient(168deg, #221e14 0%, var(--bg) 40%, var(--bg-deep) 100%);
 }
 
 .landing-bg::after {
@@ -61,7 +62,7 @@ body.landing {
   height: 480px;
   top: -10%;
   left: 52%;
-  background: radial-gradient(circle, rgba(201, 169, 98, 0.22) 0%, rgba(170, 145, 88, 0.08) 55%, transparent 70%);
+  background: radial-gradient(circle, rgba(224, 188, 92, 0.28) 0%, rgba(201, 162, 78, 0.1) 55%, transparent 70%);
   animation-delay: 0s;
 }
 
@@ -70,7 +71,7 @@ body.landing {
   height: 340px;
   bottom: 8%;
   left: -6%;
-  background: radial-gradient(circle, rgba(48, 56, 47, 0.4) 0%, rgba(30, 38, 30, 0.15) 60%, transparent 75%);
+  background: radial-gradient(circle, rgba(168, 136, 56, 0.22) 0%, rgba(36, 32, 24, 0.18) 60%, transparent 75%);
   animation-delay: -6s;
 }
 
@@ -79,7 +80,7 @@ body.landing {
   height: 240px;
   top: 42%;
   right: 6%;
-  background: radial-gradient(circle, rgba(170, 145, 88, 0.16) 0%, rgba(170, 145, 88, 0.04) 60%, transparent 75%);
+  background: radial-gradient(circle, rgba(212, 176, 88, 0.2) 0%, rgba(201, 162, 78, 0.06) 60%, transparent 75%);
   animation-delay: -12s;
 }
 
@@ -197,7 +198,7 @@ body.landing {
 
 .btn-primary:hover {
   filter: brightness(1.1);
-  box-shadow: 0 8px 32px rgba(170, 145, 88, 0.35);
+  box-shadow: 0 8px 36px var(--accent-glow-strong);
   transform: translateY(-2px);
 }
 
@@ -228,10 +229,11 @@ body.landing {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent);
-  background: rgba(170, 145, 88, 0.1);
-  border: 1px solid rgba(170, 145, 88, 0.25);
+  color: var(--accent-hover);
+  background: rgba(212, 176, 88, 0.12);
+  border: 1px solid var(--border-gold);
   border-radius: 100px;
+  box-shadow: 0 0 24px rgba(212, 176, 88, 0.12);
 }
 
 .hero h1 {
@@ -244,7 +246,7 @@ body.landing {
 }
 
 .hero h1 .highlight {
-  background: linear-gradient(135deg, var(--accent), #d4b87a);
+  background: linear-gradient(135deg, var(--accent-hover), var(--gold-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -343,8 +345,8 @@ body.landing {
 
 .feature-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(170, 145, 88, 0.4);
-  box-shadow: 0 16px 48px rgba(20, 26, 20, 0.45), 0 0 0 1px rgba(170, 145, 88, 0.1);
+  border-color: var(--border-gold);
+  box-shadow: 0 16px 48px rgba(18, 16, 10, 0.5), 0 0 32px rgba(212, 176, 88, 0.12);
 }
 
 .feature-icon {
@@ -355,9 +357,10 @@ body.landing {
   height: 48px;
   margin-bottom: 18px;
   border-radius: 12px;
-  background: rgba(170, 145, 88, 0.12);
-  color: var(--accent);
+  background: rgba(212, 176, 88, 0.14);
+  color: var(--accent-hover);
   font-size: 1.4rem;
+  box-shadow: 0 0 20px rgba(212, 176, 88, 0.1);
 }
 
 .feature-card h3 {
@@ -399,7 +402,7 @@ body.landing {
   right: 24px;
   font-size: 3rem;
   font-weight: 700;
-  color: rgba(170, 145, 88, 0.12);
+  color: rgba(212, 176, 88, 0.14);
   line-height: 1;
 }
 
@@ -498,7 +501,7 @@ body.landing {
   transition: border-color 0.2s;
 }
 
-.faq-item[open] { border-color: rgba(170, 145, 88, 0.35); }
+.faq-item[open] { border-color: var(--border-gold); }
 
 .faq-item summary {
   padding: 20px 24px;
@@ -541,18 +544,19 @@ body.landing {
 .cta-banner {
   text-align: center;
   padding: 56px 40px;
-  background: linear-gradient(145deg, rgba(170, 145, 88, 0.14), rgba(30, 38, 30, 0.85));
-  border: 1px solid rgba(170, 145, 88, 0.28);
+  background: linear-gradient(145deg, rgba(212, 176, 88, 0.18), rgba(36, 32, 24, 0.88));
+  border: 1px solid var(--border-gold);
   border-radius: calc(var(--radius) + 4px);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 0 60px rgba(212, 176, 88, 0.1);
 }
 
 .cta-banner::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 80% at 50% 120%, rgba(170, 145, 88, 0.15), transparent);
+  background: radial-gradient(ellipse 60% 80% at 50% 120%, rgba(224, 188, 92, 0.18), transparent);
   pointer-events: none;
 }
 
@@ -593,17 +597,31 @@ body.landing {
 
 .landing-footer p { margin: 10px 0 0; }
 
+/* ── Landing hero — enhanced logo watermark parallax feel ── */
+body.landing::before {
+  background-size: min(460px, 58vw);
+  opacity: 0.06;
+  animation: logo-watermark-drift 40s var(--ease-out) infinite, logo-watermark-pulse 12s ease-in-out infinite;
+}
+
+@keyframes logo-watermark-pulse {
+  0%, 100% { opacity: 0.05; }
+  50% { opacity: 0.075; }
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .hero-animate > *,
   .reveal,
-  .landing-orb {
+  .landing-orb,
+  body.landing::before {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
   }
+  body.landing::before { opacity: 0.04 !important; }
   .step-card .step-line { transform: scaleX(1); }
 }
 
