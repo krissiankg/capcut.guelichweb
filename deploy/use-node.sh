@@ -12,5 +12,3 @@ else
   echo "!! Node 22+ introuvable. Lancez: sudo bash deploy/install-node22.sh" >&2
   exit 1
 fi
-
-export NODE_ENV="${NODE_ENV:-production}"

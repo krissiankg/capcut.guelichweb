@@ -53,7 +53,7 @@ fi
 echo "==> Build portal..."
 cd "${REPO_DIR}/portal"
 if [[ -f package-lock.json ]]; then
-  npm ci
+  npm ci --include=dev
 else
   npm install
 fi
@@ -92,7 +92,7 @@ fi
 
 echo "==> Dépendances production portal..."
 cd "${PORTAL_ROOT}"
-npm install --omit=dev
+NODE_ENV=production npm install --omit=dev
 
 echo "==> Nginx vhost (si mis à jour)..."
 NGINX_CONF="/www/server/panel/vhost/nginx/${DOMAIN}.conf"
