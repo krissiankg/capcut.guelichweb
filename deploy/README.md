@@ -51,6 +51,31 @@ psql "$DATABASE_URL" -f supabase/migrations/002_password_reset.sql
 
 ## Déploiement
 
+### Mise à jour courante (git pull — recommandé)
+
+```bash
+ssh mon-vps
+cd /www/wwwroot/capcut.guelichweb.store-src
+bash deploy/pull.sh
+```
+
+- Repo : `https://github.com/krissiankg/capcut.guelichweb.git` → `/www/wwwroot/capcut.guelichweb.store-src`
+- Node **22+** via aaPanel (`/www/server/nodejs/v24.16.0`) ou `sudo bash deploy/install-node22.sh`
+- Préserve `.env` et `deploy/monitoring/.kuma-admin.env`
+- Éditeur web : inchangé par défaut (`WITH_WEB=1` si le monorepo complet est sur GitHub)
+
+### Première installation
+
+```bash
+ssh mon-vps
+git clone https://github.com/krissiankg/capcut.guelichweb.git /www/wwwroot/capcut.guelichweb.store-src
+cp /www/wwwroot/capcut.guelichweb.store-portal/.env /www/wwwroot/capcut.guelichweb.store-src/portal/.env 2>/dev/null || true
+bash /www/wwwroot/capcut.guelichweb.store-src/deploy/pull.sh
+cd /www/wwwroot/capcut.guelichweb.store-portal && npm run seed-admin
+```
+
+### Installation complète (setup initial)
+
 ```bash
 ssh mon-vps
 git clone <votre-repo> /www/wwwroot/capcut.guelichweb.store-src
