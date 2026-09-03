@@ -39,8 +39,8 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Watermark */
-  --logo-watermark-url: url("/brand/guelichweb-stacked.png");
-  --logo-watermark-ghost-url: url("/brand/guelichweb-medium.png");
+  --logo-watermark-url: url("/brand/guelichweb-stacked.png?v=2");
+  --logo-watermark-ghost-url: url("/brand/guelichweb-medium.png?v=2");
 }
 
 /* ── Ambient background (auth, legal, account pages) ── */
@@ -228,13 +228,15 @@ body:not(.landing) textarea:focus {
 }
 
 .brand-logo--medium img {
-  max-width: 100px;
-  max-height: 72px;
+  max-width: 110px;
+  max-height: 78px;
+  aspect-ratio: 326 / 228;
 }
 
 .brand-logo--stacked img {
-  max-width: 160px;
+  max-width: 180px;
   max-height: 120px;
+  aspect-ratio: 967 / 647;
 }
 
 .guelichweb-footer p {

@@ -157,10 +157,11 @@ body.landing {
 .nav-brand-logo {
   display: block;
   width: auto;
-  height: 44px;
-  max-width: 72px;
+  height: 40px;
+  max-width: 64px;
+  aspect-ratio: 326 / 228;
   object-fit: contain;
-  filter: drop-shadow(0 0 12px var(--accent-glow));
+  filter: drop-shadow(0 0 10px var(--accent-glow));
 }
 
 .nav-brand-text {
@@ -197,32 +198,33 @@ body.landing {
 .hero-brand {
   display: flex;
   justify-content: center;
-  margin: 0 0 22px;
+  margin: 0 0 18px;
 }
 
 .hero-brand-logo {
   display: block;
-  width: min(168px, 42vw);
+  width: min(220px, 52vw);
   height: auto;
+  aspect-ratio: 967 / 647;
   object-fit: contain;
   filter:
-    drop-shadow(0 0 28px var(--accent-glow-strong))
-    drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+    drop-shadow(0 0 22px var(--accent-glow))
+    drop-shadow(0 6px 18px rgba(0, 0, 0, 0.28));
   animation: hero-brand-glow 8s ease-in-out infinite;
 }
 
 @keyframes hero-brand-glow {
   0%, 100% {
     filter:
-      drop-shadow(0 0 20px var(--accent-glow))
-      drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
-    transform: translateY(0);
+      drop-shadow(0 0 16px var(--accent-glow))
+      drop-shadow(0 6px 18px rgba(0, 0, 0, 0.28));
+    transform: translateY(0) scale(1);
   }
   50% {
     filter:
-      drop-shadow(0 0 36px var(--accent-glow-strong))
-      drop-shadow(0 10px 28px rgba(0, 0, 0, 0.4));
-    transform: translateY(-3px);
+      drop-shadow(0 0 28px var(--accent-glow-strong))
+      drop-shadow(0 8px 22px rgba(0, 0, 0, 0.32));
+    transform: translateY(-2px) scale(1.015);
   }
 }
 
@@ -700,8 +702,8 @@ body.landing::before {
 @media (max-width: 640px) {
   .landing-nav { flex-direction: column; gap: 16px; align-items: flex-start; }
   .nav-links { width: 100%; justify-content: flex-end; }
-  .nav-brand-logo { height: 38px; }
-  .hero-brand-logo { width: min(132px, 48vw); }
+  .nav-brand-logo { height: 34px; }
+  .hero-brand-logo { width: min(180px, 58vw); }
   .cta-banner { padding: 40px 24px; }
   .seo-block { padding: 28px 22px; }
 }
