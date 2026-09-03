@@ -62,7 +62,15 @@ bash deploy/pull.sh
 - Repo : `https://github.com/krissiankg/capcut.guelichweb.git` → `/www/wwwroot/capcut.guelichweb.store-src`
 - Node **22+** via aaPanel (`/www/server/nodejs/v24.16.0`) ou `sudo bash deploy/install-node22.sh`
 - Préserve `.env` et `deploy/monitoring/.kuma-admin.env`
-- Éditeur web : inchangé par défaut (`WITH_WEB=1` si le monorepo complet est sur GitHub)
+## Éditeur OpenReel (apps/web)
+
+L'éditeur **est déjà en ligne** sur `https://capcut.guelichweb.store/` (dossier `/www/wwwroot/capcut.guelichweb.store`).
+
+`WITH_WEB=1` ne contrôle **pas** l'accès utilisateurs. Il sert uniquement à **reconstruire** l'éditeur depuis le monorepo Git lors d'un `pull.sh`.
+
+Aujourd'hui le dépôt GitHub CapCut n'embarque pas le monorepo OpenReel complet (`package.json` / `pnpm-workspace` racine manquants) → laissez `WITH_WEB=0` (défaut). Le portal se déploie normalement ; l'éditeur reste celui déjà publié jusqu'à ce que le monorepo soit complet sur GitHub.
+
+
 
 ### Première installation
 

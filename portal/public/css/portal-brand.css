@@ -64,8 +64,8 @@ body::before {
   pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
-  background: var(--logo-watermark-url) center 40% / min(400px, 52vw) no-repeat;
-  opacity: 0.055;
+  background: var(--logo-watermark-url) center 40% / min(420px, 54vw) no-repeat;
+  opacity: 0.07;
   animation: logo-watermark-drift 34s var(--ease-out) infinite;
 }
 
@@ -100,22 +100,22 @@ body > *:not(.guelichweb-footer):not(.bg-logo-watermark) {
 }
 
 .bg-logo-watermark--ghost-a {
-  width: min(180px, 28vw);
-  height: min(180px, 28vw);
+  width: min(200px, 30vw);
+  height: min(200px, 30vw);
   top: 12%;
   left: 6%;
   background-image: var(--logo-watermark-ghost-url);
-  opacity: 0.04;
+  opacity: 0.055;
   animation: logo-ghost-drift-a 42s var(--ease-out) infinite;
 }
 
 .bg-logo-watermark--ghost-b {
-  width: min(140px, 22vw);
-  height: min(140px, 22vw);
+  width: min(160px, 24vw);
+  height: min(160px, 24vw);
   bottom: 18%;
   right: 8%;
   background-image: var(--logo-watermark-ghost-url);
-  opacity: 0.035;
+  opacity: 0.05;
   animation: logo-ghost-drift-b 38s var(--ease-out) infinite reverse;
 }
 

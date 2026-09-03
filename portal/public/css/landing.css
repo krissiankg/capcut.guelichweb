@@ -32,11 +32,11 @@ body.landing {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 90% 55% at 50% -12%, rgba(212, 176, 88, 0.24), transparent 58%),
-    radial-gradient(ellipse 65% 45% at 100% 82%, rgba(168, 136, 56, 0.16), transparent 52%),
-    radial-gradient(ellipse 50% 38% at 0% 58%, rgba(201, 162, 78, 0.14), transparent 50%),
-    radial-gradient(ellipse 45% 35% at 75% 25%, rgba(224, 188, 92, 0.08), transparent 48%),
-    linear-gradient(168deg, #221e14 0%, var(--bg) 40%, var(--bg-deep) 100%);
+    radial-gradient(ellipse 95% 58% at 50% -10%, rgba(232, 204, 120, 0.28), transparent 58%),
+    radial-gradient(ellipse 70% 48% at 100% 82%, rgba(201, 162, 78, 0.2), transparent 52%),
+    radial-gradient(ellipse 55% 40% at 0% 58%, rgba(212, 176, 88, 0.16), transparent 50%),
+    radial-gradient(ellipse 48% 36% at 75% 25%, rgba(224, 188, 92, 0.12), transparent 48%),
+    linear-gradient(168deg, #2a2416 0%, var(--bg) 40%, var(--bg-deep) 100%);
 }
 
 .landing-bg::after {
@@ -62,7 +62,7 @@ body.landing {
   height: 480px;
   top: -10%;
   left: 52%;
-  background: radial-gradient(circle, rgba(224, 188, 92, 0.28) 0%, rgba(201, 162, 78, 0.1) 55%, transparent 70%);
+  background: radial-gradient(circle, rgba(232, 204, 120, 0.34) 0%, rgba(201, 162, 78, 0.12) 55%, transparent 70%);
   animation-delay: 0s;
 }
 
@@ -146,6 +146,45 @@ body.landing {
   padding: 28px 0;
 }
 
+.nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-brand-logo {
+  display: block;
+  width: auto;
+  height: 44px;
+  max-width: 72px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px var(--accent-glow));
+}
+
+.nav-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.15;
+}
+
+.nav-brand-text strong {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.nav-brand-text span {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-hover);
+}
+
 .landing-nav .badge {
   display: inline-block;
   font-size: 11px;
@@ -153,6 +192,38 @@ body.landing {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
+}
+
+.hero-brand {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 22px;
+}
+
+.hero-brand-logo {
+  display: block;
+  width: min(168px, 42vw);
+  height: auto;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 0 28px var(--accent-glow-strong))
+    drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+  animation: hero-brand-glow 8s ease-in-out infinite;
+}
+
+@keyframes hero-brand-glow {
+  0%, 100% {
+    filter:
+      drop-shadow(0 0 20px var(--accent-glow))
+      drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+    transform: translateY(0);
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 36px var(--accent-glow-strong))
+      drop-shadow(0 10px 28px rgba(0, 0, 0, 0.4));
+    transform: translateY(-3px);
+  }
 }
 
 .nav-links {
@@ -246,7 +317,7 @@ body.landing {
 }
 
 .hero h1 .highlight {
-  background: linear-gradient(135deg, var(--accent-hover), var(--gold-light));
+  background: linear-gradient(120deg, var(--gold-light), var(--accent-hover) 45%, var(--gold-amber));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -599,14 +670,14 @@ body.landing {
 
 /* ── Landing hero — enhanced logo watermark parallax feel ── */
 body.landing::before {
-  background-size: min(460px, 58vw);
-  opacity: 0.06;
+  background-size: min(520px, 64vw);
+  opacity: 0.08;
   animation: logo-watermark-drift 40s var(--ease-out) infinite, logo-watermark-pulse 12s ease-in-out infinite;
 }
 
 @keyframes logo-watermark-pulse {
-  0%, 100% { opacity: 0.05; }
-  50% { opacity: 0.075; }
+  0%, 100% { opacity: 0.065; }
+  50% { opacity: 0.1; }
 }
 
 /* ── Reduced motion ── */
@@ -629,6 +700,14 @@ body.landing::before {
 @media (max-width: 640px) {
   .landing-nav { flex-direction: column; gap: 16px; align-items: flex-start; }
   .nav-links { width: 100%; justify-content: flex-end; }
+  .nav-brand-logo { height: 38px; }
+  .hero-brand-logo { width: min(132px, 48vw); }
   .cta-banner { padding: 40px 24px; }
   .seo-block { padding: 28px 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-brand-logo {
+    animation: none !important;
+  }
 }
