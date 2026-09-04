@@ -24,6 +24,8 @@ $PNPM build
 
 echo "==> Copie dist OpenReel..."
 sudo rsync -a --delete "${REPO_DIR}/apps/web/dist/" "${WEB_ROOT}/"
+sudo find "${WEB_ROOT}" -type d -exec chmod 755 {} \;
+sudo find "${WEB_ROOT}" -type f -exec chmod 644 {} \;
 
 echo "==> Build portal..."
 cd "${REPO_DIR}/portal"

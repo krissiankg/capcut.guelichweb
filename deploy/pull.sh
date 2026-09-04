@@ -45,6 +45,8 @@ if [[ "${WITH_WEB}" == "1" ]]; then
     $PNPM build
     echo "==> Sync éditeur → ${WEB_ROOT}"
     rsync -a --delete "${REPO_DIR}/apps/web/dist/" "${WEB_ROOT}/"
+    find "${WEB_ROOT}" -type d -exec chmod 755 {} \;
+    find "${WEB_ROOT}" -type f -exec chmod 644 {} \;
   fi
 else
   echo "==> Éditeur web inchangé (WITH_WEB=0). Dist actuel: ${WEB_ROOT}"
